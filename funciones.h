@@ -3,7 +3,7 @@
 
 #endif //PROGRA_2_LAB_FUNCIONES_H
 
-void initGame();
+void initGame(int**& gameMap, const int& length_side);
 void drawMap();
 void placeTower(int x, int y);
 void spawnEnemies();
