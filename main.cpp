@@ -23,6 +23,8 @@ int main() {
     // Cada fila representa un enemigo, y cada columna almacena sus coordenadas (x, y) en ese orden
     // El maximo numero de enemigos posible es 6
     int enemiesPosition[6][2] = {};
+    //Creamos un arreglo para verificar si un enemigo esta activo o no
+    bool enemiesActivate[6] = {};
 
     // Sera actualizado por placeTower()
     // Cada fila representa una torre, y cada columna almacena sus coordenadas (x, y) en ese orden

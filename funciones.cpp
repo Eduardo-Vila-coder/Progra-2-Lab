@@ -1,4 +1,6 @@
 #include "funciones.h"
+#include <iostream>
+using namespace std;
 
 void initGame(int**& gameMap, const int& length_side) {
     //Paso_1: Como primer paso, creamos las 20 filas y las 20 columnas
@@ -34,11 +36,73 @@ void initGame(int**& gameMap, const int& length_side) {
         
     
 }
-void drawMap() {}
+
+void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int enemiesPosition[6][2], bool towersActivate[6], bool enemiesActivate[6]) {
+    cout<<"column   ";
+    //Imprimimos el numero de cada columna
+    for (int i = 0; i < length_side; i++) {
+        if (i<=9)
+            cout<<i<<"  ";
+        else {
+            cout<<i<<" ";
+        }
+    }
+    cout <<"\n\n";
+
+    //Imprimimos el numero de cada fila
+    for (int i=0; i<length_side;i++) {
+        if (i<=9)
+            cout<<"row "<<i<<"    ";
+        else {
+            cout<<"row "<<i<<"   ";
+        }
+        //Imprimimos el inicio y el final
+        for (int j=0; j<length_side;j++) {
+            if (gameMap[i][j]==2)
+                cout<<" I ";
+            if (gameMap[i][j]==3)
+                cout<<" B ";
+            //Verificamos si hay torre en alguna posicion para imprimirla
+            for (int k=0; k<6; k++) {
+                if (i==towersPosition[k][0] && j==towersPosition[k][1] && towersActivate[k]==true)
+                    cout<<" T"<<k<<" ";
+                //Verificamos si hay enemigos en alguna posicion para mostrarlo en consola
+                else if (i==enemiesPosition[k][0] && j==enemiesPosition[k][1] && enemiesActivate[k]==true)
+                    cout<<" E ";
+            }
+            //Mostramos el camino con "*"
+            if (gameMap[i][j]==1)
+                cout<<" * ";
+            //Rellenamos los vacios
+            if (gameMap[i][j]==0)
+                cout<<"  ";
+        }
+        cout << endl;
+    }
+}
+
 void placeTower(int x, int y) {
     
 }
-void spawnEnemies() {}
+void spawnEnemies(int enemiesPosition[6][2], bool enemiesActivate[6]) {
+
+    //Creamos un arreglo local con las posiciones iniciales de todos los enemigos considerando el numero maximo
+    int star_position[6][2]={{1, 2}, {1, 3}, {2, 3},
+    {3, 3}, {4, 3}, {4, 4}
+    };
+    //Generamos un numero aleatorio de enemigos entre 3 y 6
+    int n=(rand()%4)+3;
+
+    for (int k=0; k<n; k++) {
+        //Asignamos las coordenadas x e y usando los valores del arreglo creado anteriormente
+        enemiesPosition[k][0] = star_position[k][0];
+        enemiesPosition[k][1] = star_position[k][1];
+
+        //Actualizamos el estado del enemigo para ejecutar las funciones drawMap y attackEnemies
+        enemiesActivate[k]=true;
+    }
+}
+
 void moveEnemies() {}
 void attackEnemies() {}
 void verifyResult() {}
