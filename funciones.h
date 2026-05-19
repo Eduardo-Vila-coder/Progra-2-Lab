@@ -5,7 +5,7 @@
 
 void initGame(int**& gameMap, const int& length_side);
 void drawMap();
-void placeTower(int x, int y);
+void placeTower(int x, int y, int &money, int ** gameMap, int towersPosition[6][2], bool towersActivate[6]);
 void spawnEnemies();
 void moveEnemies();
 void attackEnemies();
