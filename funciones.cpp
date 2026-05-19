@@ -58,23 +58,32 @@ void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int 
         }
         //Imprimimos el inicio y el final
         for (int j=0; j<length_side;j++) {
+            //Creamos una variable booleana para evitar colocar varios elementos en una misma posicion
+            bool draw=false;
+
             if (gameMap[i][j]==2)
                 cout<<" I ";
             if (gameMap[i][j]==3)
                 cout<<" B ";
             //Verificamos si hay torre en alguna posicion para imprimirla
             for (int k=0; k<6; k++) {
-                if (i==towersPosition[k][0] && j==towersPosition[k][1] && towersActivate[k]==true)
+                if (i==towersPosition[k][0] && j==towersPosition[k][1] && towersActivate[k]==true) {
+                    draw=true;
                     cout<<" T"<<k<<" ";
+                }
+
                 //Verificamos si hay enemigos en alguna posicion para mostrarlo en consola
-                else if (i==enemiesPosition[k][0] && j==enemiesPosition[k][1] && enemiesActivate[k]==true)
+                else if (i==enemiesPosition[k][0] && j==enemiesPosition[k][1] && enemiesActivate[k]==true) {
+                    draw=true;
                     cout<<" E ";
+                }
             }
+
             //Mostramos el camino con "*"
-            if (gameMap[i][j]==1)
+            if (gameMap[i][j]==1 && draw==false) {}
                 cout<<" * ";
             //Rellenamos los vacios
-            if (gameMap[i][j]==0)
+            if (gameMap[i][j]==0 && draw==false) {}
                 cout<<"  ";
         }
         cout << endl;
@@ -87,8 +96,8 @@ void placeTower(int x, int y) {
 void spawnEnemies(int enemiesPosition[6][2], bool enemiesActivate[6]) {
 
     //Creamos un arreglo local con las posiciones iniciales de todos los enemigos considerando el numero maximo
-    int star_position[6][2]={{1, 2}, {1, 3}, {2, 3},
-    {3, 3}, {4, 3}, {4, 4}
+    int star_position[6][2]={{0, 1}, {0, 1}, {1, 2},
+    {2, 2}, {3, 2}, {3, 3}
     };
     //Generamos un numero aleatorio de enemigos entre 3 y 6
     int n=(rand()%4)+3;
