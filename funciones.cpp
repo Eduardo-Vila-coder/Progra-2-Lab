@@ -90,9 +90,84 @@ void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int 
     }
 }
 
-void placeTower(int x, int y) {
+void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2], bool towersActivate[6]) {
+    //Primero, debemos tener en cuenta que el usuario va a ingresar en los valores de x,y las filas y columnas empezando desde 1, pero los arreglos inician desde 0. Entonces haremos lo siguiente:
+    int fila = x - 1;    // Si ingresa fila = x = 5, el indice sera 4
+    int columna = y - 1; // Si ingresa columna = y =  10, el indice sera 9
+
     
+    //Cuando el usuario haya ingresado la fila y columna donde va a colocar la torre, debemos validar que esa posicion este dentro del mapa
+    if (fila < 0 || fila >= 20 || columna < 0 || columna >= 20) {
+        cout << "La posicion que ingresaste esta fuera del mapa" << endl;
+        return;
+    }
+
+    
+    // En caso ingrese una posicion dentro del mapa, debemos verificar que esa posicion no sea el lugar I (2), el lugar B (3) y que no sea el lugar del camino (1)
+     if (gameMap[fila][columna] == 2 || gameMap[fila][columna] == 3 || gameMap[fila][columna] == 1) {
+        cout << "Error, no se puede colocar una torre en esa posicion" << endl;
+        return;
+    }
+
+    
+    // Ademas, debemos verificar que esa posicion no este ocupada por una torre (4)
+    if (gameMap[fila][columna] == 4) {
+        cout << "Ya existe una torre en esa posicion" << endl;
+        return;
+    }
+
+    
+    //Validaremos que la torre sea adyacente al camino, ya que las torres que coloquemos deben cumplir esa condicion
+    bool adyacente = false;  //Si encontramos torre adyacente al camino, se cambia a true
+    
+    //Estos dos arreglos nos sirven para movernos en cualquier dirrecion de una fila y columna:
+    int movimiento_filas[] = {0,  0, 1, -1};        
+    int movimiento_columnas[] = {1, -1, 0,  0};
+    
+    for (int d = 0; d < 4; d++) {    //Revisamos todas las direcciones 
+        int vecino_en_fila = fila + movimiento_filas[d];
+        int vecino_en_columna  = columna + movimiento_columnas[d];
+        if (vecino_en_fila >= 0 && vecino_en_fila < 20 && vecino_en_columna >= 0 && vecino_en_columna < 20) {   //Verificamos que no nos salgamos del mapa
+            // Si el vecino esta en I (2), B (3), o es parte del camino (1)
+            if (gameMap[vecino_en_fila][vecino_en_columna] == 1 || gameMap[vecino_en_fila][vecino_en_columna] == 2 || gameMap[vecino_en_fila][vecino_en_columna] == 3) {
+                adyacente = true;  //La torre si es adyacente al camino
+                break;
+            }
+        }
+    }
+
+    
+    if (!adyacente) {
+        cout << "La torre debe estar adyacente al camino" << endl;
+        return;
+    }
+
+    
+    // Cuando ya validamos que la torre que colocaremos es adyacente al camino, entonces la colocaremos y gastaremos dinero en ello.
+    if (money < 100) {    //Primero validamos si hay dinero
+        cout << "No hay dinero suficiente para colocar una torre" << endl;
+        return;
+    }
+    
+    // Si tenemos dinero suficiente, entonces colocaremos la torre
+    money -= 100;
+    gameMap[fila][columna] = 4;     //(4 significa que estamos colocando una torre)
+    //Como ya colocamos la torre, finalmente vamos a guardar la posicion de esta nueva torre
+    for (int i = 0; i < 6; i++) {    //Revisamos las 6 torres
+        if (towersActivate[i] == false) {   //Esto significa que en la fila i, no hay una torre existente
+            towersPosition[i][0] = fila;    //Guardamos la posicion fila de la torre en la 1ra columna
+            towersPosition[i][1] = columna; //Guardamos la posicion columna de la torre en la 2da columna
+            towersActivate[i]    = true;
+            break;
+        }
+    }
+    
+    //Por ultimo, imprimimos que la torre fue colocada y el dinero actualizado
+    cout << "Torre colocada" << endl;
+    cout << "Dinero: " << money << endl;
 }
+
+
 void spawnEnemies(int enemiesPosition[6][2], bool enemiesActivate[6]) {
 
     //Creamos un arreglo local con las posiciones iniciales de todos los enemigos considerando el numero maximo
