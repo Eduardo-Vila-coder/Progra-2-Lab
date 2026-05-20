@@ -41,7 +41,7 @@ int main() {
     bool victory = false, defeat = false;
 
     // Inicializamos el juego y el mapa
-    initGame();
+    initGame(gameMap, length_side);
 
     cout << "Welcome to the world of tower defense xyz\n";
     gameStatus();
@@ -51,14 +51,14 @@ int main() {
         cin >> command;
 
         if (command == "map") {
-            drawMap();
+            drawMap(gameMap, length_side, towersPosition, enemiesPosition, towersActivate, enemiesActivate);
         } else if (command == "status") {
             gameStatus();
         } else if (command == "place") {
             cin >> x >> y;
-            placeTower(x, y);
+            placeTower(x, y, money, gameMap, towersPosition, towersActivate, towerCost);
         } else if (command == "wave") {
-            spawnEnemies();
+            spawnEnemies(enemiesPosition, enemiesActivate);
         } else if (command == "next") {
             moveEnemies();
             attackEnemies();
@@ -77,7 +77,7 @@ int main() {
 
 
     // Eliminamos el mapa dinámico creado
-    //deleteMap();      // Descomentar esta función cuando initGame() funcione
+    deleteMap(gameMap, length_side);
 
     return 0;
 }

@@ -84,13 +84,13 @@ void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int 
                 cout<<" * ";
             //Rellenamos los vacios
             if (gameMap[i][j]==0 && draw==false) {}
-                cout<<"  ";
+                cout<<"   ";
         }
         cout << endl;
     }
 }
 
-void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2], bool towersActivate[6]) {
+void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2], bool towersActivate[6], int towerCost) {
     //Primero, debemos tener en cuenta que el usuario va a ingresar en los valores de x,y las filas y columnas empezando desde 1, pero los arreglos inician desde 0. Entonces haremos lo siguiente:
     int fila = x - 1;    // Si ingresa fila = x = 5, el indice sera 4
     int columna = y - 1; // Si ingresa columna = y =  10, el indice sera 9
@@ -144,13 +144,13 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
 
     
     // Cuando ya validamos que la torre que colocaremos es adyacente al camino, entonces la colocaremos y gastaremos dinero en ello.
-    if (money < 100) {    //Primero validamos si hay dinero
+    if (money < towerCost) {    //Primero validamos si hay dinero
         cout << "No hay dinero suficiente para colocar una torre" << endl;
         return;
     }
     
     // Si tenemos dinero suficiente, entonces colocaremos la torre
-    money -= 100;
+    money -= towerCost;
     gameMap[fila][columna] = 4;     //(4 significa que estamos colocando una torre)
     //Como ya colocamos la torre, finalmente vamos a guardar la posicion de esta nueva torre
     for (int i = 0; i < 6; i++) {    //Revisamos las 6 torres
