@@ -37,10 +37,10 @@ void initGame(int**& gameMap, const int& length_side) {
     for (int i = 0; i < 6; i++) {
         towersPosition[i][0] = -1;
         towersPosition[i][1] = -1;
-        towersActivate[i]    = false;
+        towersActivate[i] = false;
     }
 
-    cout << "----------Mapa creado----------" << endl;
+    cout<< "----------Mapa creado----------"<< endl;
         
     
 }
@@ -134,7 +134,7 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
     
     for (int d = 0; d < 4; d++) {    //Revisamos todas las direcciones 
         int vecino_en_fila = fila + movimiento_filas[d];
-        int vecino_en_columna  = columna + movimiento_columnas[d];
+        int vecino_en_columna = columna + movimiento_columnas[d];
         if (vecino_en_fila >= 0 && vecino_en_fila < 20 && vecino_en_columna >= 0 && vecino_en_columna < 20) {   //Verificamos que no nos salgamos del mapa
             // Si el vecino esta en I (2), B (3), o es parte del camino (1)
             if (gameMap[vecino_en_fila][vecino_en_columna] == 1 || gameMap[vecino_en_fila][vecino_en_columna] == 2 || gameMap[vecino_en_fila][vecino_en_columna] == 3) {
@@ -146,7 +146,7 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
 
     
     if (!adyacente) {
-        cout << "La torre debe estar adyacente al camino" << endl;
+        cout << "La torre debe estar adyacente al camino"<< endl;
         return;
     }
 
@@ -161,18 +161,18 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
     money -= towerCost;
     gameMap[fila][columna] = 4;     //(4 significa que estamos colocando una torre)
     //Como ya colocamos la torre, finalmente vamos a guardar la posicion de esta nueva torre
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i<6; i++) {
     if (towersPosition[i][0] == -1) {  //Si es verdadero, este espacio nunca fue usado
         towersPosition[i][0] = fila;
         towersPosition[i][1] = columna;
-        towersActivate[i]    = true;
+        towersActivate[i] = true;
         break;
         }
     }
     
     //Por ultimo, imprimimos que la torre fue colocada y el dinero actualizado
-    cout << "Torre colocada" << endl;
-    cout << "Dinero: " << money << endl;
+    cout << "Torre colocada"<< endl;
+    cout << "Dinero: "<< money << endl;
 }
 
 
@@ -196,7 +196,172 @@ void spawnEnemies(int enemiesPosition[6][2], bool enemiesActivate[6]) {
 }
 
 void moveEnemies() {}
-void attackEnemies() {}
+void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool enemiesActivate[6], int towersPosition[6][2], bool towersActivate[6]) {
+    // Vamos a crear un arreglo que guardara todo el camino en orden para luego usarlo cuando queramos detectar a un enemigo cerca de la base, pongo 105 para
+    //tener suficiente espacio en el arreglo
+    int camino_enemigo[105][2];
+    int paso = 0;      //Este contador nos sirve para recorrer las posiciones dentro del arreglo
+
+    //Posiciones iniciales
+    camino_enemigo[paso][0] = 1;
+    camino_enemigo[paso][1] = 0;
+    paso++;
+
+    // Segundo tramo
+    for (int i = 1; i <= 3; i++) {
+        camino_enemigo[paso][0] = i;
+        camino_enemigo[paso][1] = 1;
+        paso++;
+    }
+
+    // Tercer tramo
+    for (int j = 1; j <= 11; j++) {
+        camino_enemigo[paso][0] = 4;
+        camino_enemigo[paso][1] = j;
+        paso++;
+    }
+
+    // Cuarto tramo
+    for (int i = 5; i <= 8; i++) {
+        camino_enemigo[paso][0] = i;
+        camino_enemigo[paso][1] = 11;
+        paso++;
+    }
+
+    // Quinto tramo
+    for (int j = 11; j >= 2; j--) {
+        camino_enemigo[paso][0] = 9;
+        camino_enemigo[paso][1] = j;
+        paso++;
+    }
+
+    // Sexto tramo
+    for (int i = 10; i <= 13; i++) {
+        camino_enemigo[paso][0] = i;
+        camino_enemigo[paso][1] = 2;
+        paso++;
+    }
+
+    // Septimo tramo
+    for (int j = 2; j <= 17; j++) {
+        camino_enemigo[paso][0] = 14;
+        camino_enemigo[paso][1] = j;
+        paso++;
+    }
+
+    // Octavo tramo
+    for (int i = 15; i <= 19; i++) {
+        camino_enemigo[paso][0] = i;
+        camino_enemigo[paso][1] = 17;
+        paso++;
+    }
+
+    // Posiciones antes de la base
+    camino_enemigo[paso][0] = 19;
+    camino_enemigo[paso][1] = 18;
+    paso++;
+
+    camino_enemigo[paso][0] = 19;
+    camino_enemigo[paso][1] = 19;
+    paso++;
+
+    // Guardamos el tamano total que tiene camino
+    int camino_enemigo_Length = paso;
+
+
+    //Ahora defininos el rango de ataque que tiene cada torre
+    int rango_ataque[12][2] = {{ 0,-2},{ 0, 2},{-2, 0},{ 2, 0},{-1,-2},{ 1,-2},{-1, 2},{ 1, 2},{-2,-1},{ 2,-1},{-2, 1},{ 2, 1}};
+
+
+    //Ahora revisamos cada torre
+    for (int torre = 0; torre < 6; torre++) {
+
+        // Si la torre ya disparo, lo vamos a ignorar
+        if (towersActivate[torre] == false) {
+            continue;
+        }
+
+        //Si la torre no existe, lo vamos a ignorar tambien
+        if (towersPosition[torre][0] == -1) {
+            continue;
+        }
+
+        
+
+        // Aqui obtenemos la posicion de la torre
+        int fila_torre = towersPosition[torre][0];
+        int columna_torre = towersPosition[torre][1];
+
+        // Estas variables nos seviran para guardar el enemigo mas cercano y asi poder eliminarlo
+        int enemigo_cercano = -1;
+        int paso_cercano = -1;
+
+
+        //Ahora, vamos a revisar todos los enemigos
+        for (int enemigo = 0; enemigo<6; enemigo++) {
+            // Si el enemigo no existe lo vamos a ignorar
+            if (enemiesActivate[enemigo] == false) {
+                continue;
+            }
+
+            // Si el enemigo existe, entonces obtenemos la posicion del enemigo
+            int fila_enemigo = enemiesPosition[enemigo][0];
+            int columna_enemigo = enemiesPosition[enemigo][1];
+
+
+            //Ahora revismaos las posiciones del rango para encontrar al enemigo mas cercano
+            for (int r = 0; r<12; r++) {
+                int fila_rango = fila_torre + rango_ataque[r][0];
+                int columna_rango = columna_torre + rango_ataque[r][1];
+
+                // Tenemos que validar que el enemigo este dentro del rango de ataque
+                if (fila_rango == fila_enemigo && columna_rango == columna_enemigo) {
+                    
+                    // Buscamos en que paso del camino esta este enemigo mas cercano que hemos encontrado
+                    for (int paso_en_busqueda = 0; paso_en_busqueda < camino_enemigo_Length; paso_en_busqueda++) {
+                        
+                        if (camino_enemigo[paso_en_busqueda][0] == fila_enemigo && camino_enemigo[paso_en_busqueda][1] == columna_enemigo) {
+                            // Verificamos que es el enemigo mas cercano de todos los que hemos encontrado hasta ahora?
+                            if (paso_en_busqueda > paso_cercano) {
+                                paso_cercano = paso_en_busqueda;
+                                enemigo_cercano = enemigo;
+                            }
+                            break;
+                        }
+                    }
+                    
+                    break;
+                    
+                }
+            }
+        }
+
+        
+        //Por ultimo, cuando encontremos al enemigo mas cercano, lo tenemos que eliminar 
+        if (enemigo_cercano != -1) {
+            // Guardamos la posicion del enemigo que vamos a eliminar
+            int fila_enemigo_cercano    = enemiesPosition[enemigo_cercano][0];
+            int columna_enemigo_cercano = enemiesPosition[enemigo_cercano][1];
+
+            // Borramos al enemigo de nuestro mapa
+            gameMap[fila_enemigo_cercano][columna_enemigo_cercano] = 1;
+
+            // Luego tenemos que poner al enemigo como muerto
+            enemiesActivate[enemigo_cercano] = false;
+
+            // Como se elimino al enemigo, le damos dinero al jugador
+            money += 50;
+
+            // Desactivamos la torre permanentemente
+            towersActivate[torre] = false;
+
+            
+    
+        }
+
+        
+    }
+} 
 void verifyResult() {}
 void gameStatus() {}
 
