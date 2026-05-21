@@ -32,6 +32,14 @@ void initGame(int**& gameMap, const int& length_side) {
     for (int i = 15; i <= 19; i++) gameMap[i][17] = 1; // Septimo tramo
     gameMap[19][18] = 1;    
 
+
+    //Inicializamos la posicion de las torres con -1 , porque este numero esta sin uso en las posiciones del mapa.
+    for (int i = 0; i < 6; i++) {
+        towersPosition[i][0] = -1;
+        towersPosition[i][1] = -1;
+        towersActivate[i]    = false;
+    }
+
     cout << "----------Mapa creado----------" << endl;
         
     
@@ -153,12 +161,12 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
     money -= towerCost;
     gameMap[fila][columna] = 4;     //(4 significa que estamos colocando una torre)
     //Como ya colocamos la torre, finalmente vamos a guardar la posicion de esta nueva torre
-    for (int i = 0; i < 6; i++) {    //Revisamos las 6 torres
-        if (towersActivate[i] == false) {   //Esto significa que en la fila i, no hay una torre existente
-            towersPosition[i][0] = fila;    //Guardamos la posicion fila de la torre en la 1ra columna
-            towersPosition[i][1] = columna; //Guardamos la posicion columna de la torre en la 2da columna
-            towersActivate[i]    = true;
-            break;
+    for (int i = 0; i < 6; i++) {
+    if (towersPosition[i][0] == -1) {  //Si es verdadero, este espacio nunca fue usado
+        towersPosition[i][0] = fila;
+        towersPosition[i][1] = columna;
+        towersActivate[i]    = true;
+        break;
         }
     }
     
