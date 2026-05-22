@@ -45,7 +45,8 @@ void initGame(int**& gameMap, const int& length_side, int towersPosition[6][2], 
     
 }
 
-void drawMap(int** gameMap,const int& length_side, int towersPosition[6][2], int enemiesPosition[6][2], bool towersActivate[6], bool enemiesActivate[6]) {
+
+void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int enemiesPosition[6][2], bool towersActivate[6], bool enemiesActivate[6]) {
     cout<<"column   ";
     //Imprimimos el numero de cada columna
     for (int i = 0; i < length_side; i++) {
@@ -88,15 +89,20 @@ void drawMap(int** gameMap,const int& length_side, int towersPosition[6][2], int
             }
 
             //Mostramos el camino con "*"
-            if (gameMap[i][j]==1 && draw==false) {}
+            if (gameMap[i][j]==1 && draw==false) {
                 cout<<" * ";
+                break;
+            }
             //Rellenamos los vacios
-            if (gameMap[i][j]==0 && draw==false) {}
+            if (gameMap[i][j]==0 && draw==false) {
                 cout<<"   ";
+                break;
+            }
         }
         cout << endl;
     }
 }
+
 
 void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2], bool towersActivate[6], int towerCost) {
     //Primero, debemos tener en cuenta que el usuario va a ingresar en los valores de x,y las filas y columnas empezando desde 1, pero los arreglos inician desde 0. Entonces haremos lo siguiente:
@@ -179,7 +185,7 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
 void spawnEnemies(int enemiesPosition[6][2], bool enemiesActivate[6]) {
 
     //Creamos un arreglo local con las posiciones iniciales de todos los enemigos considerando el numero maximo
-    int star_position[6][2]={{0, 1}, {0, 1}, {1, 2},
+    int star_position[6][2]={{0, 1}, {0, 2}, {1, 2},
     {2, 2}, {3, 2}, {3, 3}
     };
     //Generamos un numero aleatorio de enemigos entre 3 y 6
