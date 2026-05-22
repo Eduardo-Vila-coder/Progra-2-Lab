@@ -1,5 +1,6 @@
 #include "funciones.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 void initGame(int**& gameMap, const int& length_side, int towersPosition[6][2], bool towersActivate[6]) {
@@ -47,35 +48,30 @@ void initGame(int**& gameMap, const int& length_side, int towersPosition[6][2], 
 
 
 void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int enemiesPosition[6][2], bool towersActivate[6], bool enemiesActivate[6]) {
-    cout<<"       ";
+    cout << setw(6) << " ";
     //Imprimimos el numero de cada columna
     for (int i = 0; i < length_side; i++) {
-        if (i<=9)
-            cout<<i+1<<"  ";
-        else {
-            cout<<i+1<<" ";
-        }
+        cout << setw(4) << i+1;
     }
     cout <<"\n\n";
 
     //Imprimimos el numero de cada fila
     for (int i=0; i<length_side;i++) {
         if (i<=9)
-            cout<<" "<<i+1<<"    ";
+            cout << setw(4) << i+1 << "  ";
         else {
-            cout<<" "<<i+1<<"   ";
+            cout << setw(4) << i+1 << "  ";
         }
         //Imprimimos el inicio y el final
         for (int j=0; j<length_side;j++) {
             bool draw=false;
 
-
             if (gameMap[i][j]==2) {
-                cout<<" I ";
+                cout << setw(4) << "I";
                 draw=true;
             }
             if (gameMap[i][j]==3) {
-                cout<<" B ";
+                cout << setw(4) << "B";
                 draw=true;
             }
 
@@ -83,19 +79,19 @@ void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int 
             for (int k=0; k<6; k++) {
                 if (i==towersPosition[k][0] && j==towersPosition[k][1] && towersActivate[k]==true) {
                     draw=true;
-                    cout<<" T"<<k<<" ";
+                    cout << setw(4) << ("T" + to_string(k + 1));
                 }
                 //Verificamos si hay enemigos en alguna posicion para mostrarlo en consola
                 else if (i==enemiesPosition[k][0] && j==enemiesPosition[k][1] && enemiesActivate[k]==true){
                     draw=true;
-                    cout<<" E ";
+                    cout << setw(4) << "E";
                 }
             }
             if (gameMap[i][j]==1 && draw==false) {
-                cout<<" * ";
+                cout << setw(4) << "*";
             }
             if (gameMap[i][j]==0 && draw==false) {
-                cout<<" ' ";
+                cout << setw(4) << ".";
             }
         }
 

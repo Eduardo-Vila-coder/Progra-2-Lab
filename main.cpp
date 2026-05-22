@@ -14,7 +14,7 @@ const int rewardPerEnemy = 50;
 int main() {
     // Declaramos el mapa 20 x 20 y la cantidad inicial de dinero
     int** gameMap = nullptr;
-    int money = 300;
+    int money = 300 * 2;
 
     // Declaramos la variable que almacenara el comando introducido por el usuario
     string command = "";
@@ -78,6 +78,7 @@ int main() {
         //         cout << gameMap[i][j] << " ";
         //     } cout << endl;
         // }
+        // for (int i = 0; i < 6; i++) {cout << towersActivate[i] << " ";} cout << endl;
     } while (!victory && !defeat);
 
     if (victory) {
