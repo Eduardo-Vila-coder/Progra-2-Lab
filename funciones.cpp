@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-void initGame(int**& gameMap, const int& length_side) {
+void initGame(int**& gameMap, const int& length_side, int towersPosition[6][2], bool towersActivate[6]) {
     //Paso_1: Como primer paso, creamos las 20 filas y las 20 columnas
     gameMap = new int*[length_side];
         
@@ -45,7 +45,7 @@ void initGame(int**& gameMap, const int& length_side) {
     
 }
 
-void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int enemiesPosition[6][2], bool towersActivate[6], bool enemiesActivate[6]) {
+void drawMap(int** gameMap,const int& length_side, int towersPosition[6][2], int enemiesPosition[6][2], bool towersActivate[6], bool enemiesActivate[6]) {
     cout<<"column   ";
     //Imprimimos el numero de cada columna
     for (int i = 0; i < length_side; i++) {

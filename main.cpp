@@ -41,7 +41,7 @@ int main() {
     bool victory = false, defeat = false;
 
     // Inicializamos el juego y el mapa
-    initGame(gameMap, length_side);
+    initGame(gameMap, length_side, towersPosition, towersActivate);
 
     cout << "Welcome to the world of tower defense xyz\n";
     gameStatus();
@@ -61,7 +61,7 @@ int main() {
             spawnEnemies(enemiesPosition, enemiesActivate);
         } else if (command == "next") {
             moveEnemies();
-            attackEnemies();
+            attackEnemies(gameMap, money, enemiesPosition, enemiesActivate, towersPosition, towersActivate);
 
             verifyResult();
         } else {
