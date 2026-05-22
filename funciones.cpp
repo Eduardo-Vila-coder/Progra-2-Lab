@@ -107,26 +107,26 @@ void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int 
 
 void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2], bool towersActivate[6], int towerCost) {
     //Primero, debemos tener en cuenta que el usuario va a ingresar en los valores de x,y las filas y columnas empezando desde 1, pero los arreglos inician desde 0. Entonces haremos lo siguiente:
-    int fila = x - 1;    // Si ingresa fila = x = 5, el indice sera 4
-    int columna = y - 1; // Si ingresa columna = y =  10, el indice sera 9
+    int ind_fila = x - 1;    // Si ingresa fila = x = 5, el indice sera 4
+    int ind_columna = y - 1; // Si ingresa columna = y =  10, el indice sera 9
 
     
     //Cuando el usuario haya ingresado la fila y columna donde va a colocar la torre, debemos validar que esa posicion este dentro del mapa
-    if (fila < 0 || fila >= 20 || columna < 0 || columna >= 20) {
+    if (ind_fila < 0 || ind_fila >= 20 || ind_columna < 0 || ind_columna >= 20) {
         cout << "La posicion que ingresaste esta fuera del mapa" << endl;
         return;
     }
 
     
     // En caso ingrese una posicion dentro del mapa, debemos verificar que esa posicion no sea el lugar I (2), el lugar B (3) y que no sea el lugar del camino (1)
-     if (gameMap[fila][columna] == 2 || gameMap[fila][columna] == 3 || gameMap[fila][columna] == 1) {
+     if (gameMap[ind_fila][ind_columna] == 2 || gameMap[ind_fila][ind_columna] == 3 || gameMap[ind_fila][ind_columna] == 1) {
         cout << "Error, no se puede colocar una torre en esa posicion" << endl;
         return;
     }
 
     
     // Ademas, debemos verificar que esa posicion no este ocupada por una torre (4)
-    if (gameMap[fila][columna] == 4) {
+    if (gameMap[ind_fila][ind_columna] == 4) {
         cout << "Ya existe una torre en esa posicion" << endl;
         return;
     }
@@ -135,22 +135,26 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
     //Validaremos que la torre sea adyacente al camino, ya que las torres que coloquemos deben cumplir esa condicion
     bool adyacente = false;  //Si encontramos torre adyacente al camino, se cambia a true
     
-    //Estos dos arreglos nos sirven para movernos en cualquier dirrecion de una fila y columna:
-    int movimiento_filas[] = {0,  0, 1, -1};        
-    int movimiento_columnas[] = {1, -1, 0,  0};
+    // Tramo 1: Tramo que baja por la columna 1 y pasa por las filas del 3 a 5 (indice columna = 0, indice filas: de 2 a 4)
+    if (ind_columna == 0 && ind_fila >= 2 && ind_fila <= 4) adyacente = true;
     
-    for (int d = 0; d < 4; d++) {    //Revisamos todas las direcciones 
-        int vecino_en_fila = fila + movimiento_filas[d];
-        int vecino_en_columna = columna + movimiento_columnas[d];
-        if (vecino_en_fila >= 0 && vecino_en_fila < 20 && vecino_en_columna >= 0 && vecino_en_columna < 20) {   //Verificamos que no nos salgamos del mapa
-            // Si el vecino esta en I (2), B (3), o es parte del camino (1)
-            if (gameMap[vecino_en_fila][vecino_en_columna] == 1 || gameMap[vecino_en_fila][vecino_en_columna] == 2 || gameMap[vecino_en_fila][vecino_en_columna] == 3) {
-                adyacente = true;  //La torre si es adyacente al camino
-                break;
-            }
-        }
-    }
+    // Tramo 2: Tramo que esta debajo del camino en la fila 6 y va desde las columnas 2 al 11
+    if (ind_fila == 5 && ind_columna >= 1 && ind_columna <= 10) adyacente = true;
+    
+    // Tramo 3: Tramo que baja por la columna 11 y pasa por las filas del 7 al 9
+    if (ind_columna == 10 && ind_fila >= 6 && ind_fila <= 8) adyacente = true;
+    
+    // Tramo 4: Tramo que esta encima del camino en la fila 9 y va desde las columnas 3 al 10
+    if (ind_fila == 8 && ind_columna >= 2 && ind_columna <= 9) adyacente = true;
+    
+    // Tramo 5: Tramo que baja por la columna 2 y pasa por las filas del 10 al 15
+    if (ind_columna == 1 && ind_fila >= 9 && ind_fila <= 14) adyacente = true;
 
+    // Tramo 6: Tramo que esta debajo del camino en la fila 16 y va desde las columnas 3 al 17
+    if (ind_fila == 15 && ind_columna >= 2 && ind_columna <= 16) adyacente = true;
+
+    // Tramo 7: Tramo que baja por la columna 17 y pasa por las filas del 17 al 20
+    if (ind_columna == 16 && ind_fila >= 16 && ind_fila <= 19) adyacente = true;
     
     if (!adyacente) {
         cout << "La torre debe estar adyacente al camino"<< endl;
@@ -166,12 +170,12 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
     
     // Si tenemos dinero suficiente, entonces colocaremos la torre
     money -= towerCost;
-    gameMap[fila][columna] = 4;     //(4 significa que estamos colocando una torre)
+    gameMap[ind_fila][ind_columna] = 4;     //(4 significa que estamos colocando una torre)
     //Como ya colocamos la torre, finalmente vamos a guardar la posicion de esta nueva torre
     for (int i = 0; i<6; i++) {
     if (towersPosition[i][0] == -1) {  //Si es verdadero, este espacio nunca fue usado
-        towersPosition[i][0] = fila;
-        towersPosition[i][1] = columna;
+        towersPosition[i][0] = ind_fila;
+        towersPosition[i][1] = ind_columna;
         towersActivate[i] = true;
         break;
         }
