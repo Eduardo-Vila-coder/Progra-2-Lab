@@ -67,6 +67,17 @@ int main() {
         } else {
             cout << "Not recognized command\n";
         }
+        // Prueba
+        // cout << "  ";
+        // for (int i=0; i<length_side; i++) {
+        //     cout << (i+1)%10 << " ";
+        // } cout << endl;
+        // for (int i=0; i < length_side; i++) {
+        //     cout << i + 1 << " ";
+        //     for (int j=0; j < length_side; j++) {
+        //         cout << gameMap[i][j] << " ";
+        //     } cout << endl;
+        // }
     } while (!victory && !defeat);
 
     if (victory) {
