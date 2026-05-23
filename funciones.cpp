@@ -1,6 +1,8 @@
 #include "funciones.h"
 #include <iostream>
 #include <iomanip>
+#include <cstdlib>
+#include<ctime>
 using namespace std;
 
 void initGame(int**& gameMap, const int& length_side, int towersPosition[6][2], bool towersActivate[6]) {
@@ -131,8 +133,8 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
     //Validaremos que la torre sea adyacente al camino, ya que las torres que coloquemos deben cumplir esa condicion
     bool adyacente = false;  //Si encontramos torre adyacente al camino, se cambia a true
     
-    // Tramo 1: Tramo que baja por la columna 1 y pasa por las filas del 3 a 5 (indice columna = 0, indice filas: de 2 a 4)
-    if (ind_columna == 0 && ind_fila >= 2 && ind_fila <= 4) adyacente = true;
+    // Tramo 1: Tramo que baja por la columna 1 y pasa por las filas del 3 a 6 (indice columna = 0, indice filas: de 2 a 5)
+    if (ind_columna == 0 && ind_fila >= 2 && ind_fila <= 5) adyacente = true;
     
     // Tramo 2: Tramo que esta debajo del camino en la fila 6 y va desde las columnas 2 al 11
     if (ind_fila == 5 && ind_columna >= 1 && ind_columna <= 10) adyacente = true;
@@ -140,11 +142,11 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
     // Tramo 3: Tramo que baja por la columna 11 y pasa por las filas del 7 al 9
     if (ind_columna == 10 && ind_fila >= 6 && ind_fila <= 8) adyacente = true;
     
-    // Tramo 4: Tramo que esta encima del camino en la fila 9 y va desde las columnas 3 al 10
-    if (ind_fila == 8 && ind_columna >= 2 && ind_columna <= 9) adyacente = true;
+    // Tramo 4: Tramo que esta encima del camino en la fila 9 y va desde las columnas 2 al 10
+    if (ind_fila == 8 && ind_columna >= 1 && ind_columna <= 9) adyacente = true;
     
-    // Tramo 5: Tramo que baja por la columna 2 y pasa por las filas del 10 al 15
-    if (ind_columna == 1 && ind_fila >= 9 && ind_fila <= 14) adyacente = true;
+    // Tramo 5: Tramo que baja por la columna 2 y pasa por las filas del 10 al 16
+    if (ind_columna == 1 && ind_fila >= 9 && ind_fila <= 15) adyacente = true;
 
     // Tramo 6: Tramo que esta debajo del camino en la fila 16 y va desde las columnas 3 al 17
     if (ind_fila == 15 && ind_columna >= 2 && ind_columna <= 16) adyacente = true;
@@ -184,9 +186,10 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
 
 
 void spawnEnemies(int enemiesPosition[6][2], bool enemiesActivate[6]) {
+    srand(time(nullptr));
 
     //Creamos un arreglo local con las posiciones iniciales de todos los enemigos considerando el numero maximo
-    int star_position[6][2]={{0, 1}, {0, 2}, {1, 2},
+    int start_position[6][2]={{0, 1}, {0, 2}, {1, 2},
     {2, 2}, {3, 2}, {3, 3}
     };
     //Generamos un numero aleatorio de enemigos entre 3 y 6
@@ -194,8 +197,8 @@ void spawnEnemies(int enemiesPosition[6][2], bool enemiesActivate[6]) {
 
     for (int k=0; k<n; k++) {
         //Asignamos las coordenadas x e y usando los valores del arreglo creado anteriormente
-        enemiesPosition[k][0] = star_position[k][0];
-        enemiesPosition[k][1] = star_position[k][1];
+        enemiesPosition[k][0] = start_position[k][0];
+        enemiesPosition[k][1] = start_position[k][1];
 
         //Actualizamos el estado del enemigo para ejecutar las funciones drawMap y attackEnemies
         enemiesActivate[k]=true;
