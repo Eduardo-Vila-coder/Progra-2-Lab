@@ -205,7 +205,43 @@ void spawnEnemies(int enemiesPosition[6][2], bool enemiesActivate[6]) {
     }
 }
 
-void moveEnemies() {}
+
+void moveEnemies(int enemiesPosition[6][2], const bool enemiesActivate[6], int**& gameMap) {
+    // Iteraremos sober cada enemigo
+    for (size_t i = 0; i < 6; i++) {
+
+        // Si el enemigo esta activo, evaluaremos que movimiento realiza dependiendo del tramo donde se encuentra
+        if (enemiesActivate[i]) {
+            if (enemiesPosition[i][0] == 0 && enemiesPosition[i][1] == 1) {
+                enemiesPosition[i][1] += 1;
+            } else if (0 <= enemiesPosition[i][0] && enemiesPosition[i][0] <= 2 && enemiesPosition[i][1] == 2) {
+                enemiesPosition[i][0] += 1;
+            } else if (enemiesPosition[i][0] == 3 && 2 <= enemiesPosition[i][1] && enemiesPosition[i][1] <= 11) {
+                enemiesPosition[i][1] += 1;
+            } else if (3 <= enemiesPosition[i][0] && enemiesPosition[i][0] <= 9 && enemiesPosition[i][1] == 12) {
+                enemiesPosition[i][0] += 1;
+            } else if (enemiesPosition[i][0] == 10 && 4 <= enemiesPosition[i][1] && enemiesPosition[i][1] <= 12) {
+                enemiesPosition[i][1] -= 1;
+            } else if (10 <= enemiesPosition[i][0] && enemiesPosition[i][0] <= 12 && enemiesPosition[i][1] == 3) {
+                enemiesPosition[i][0] += 1;
+            } else if (enemiesPosition[i][0] == 13 && 3 <= enemiesPosition[i][1] && enemiesPosition[i][1] <= 17) {
+                enemiesPosition[i][1] += 1;
+            } else if (13 <= enemiesPosition[i][0] && enemiesPosition[i][0] <= 17 && enemiesPosition[i][1] == 18) {
+                enemiesPosition[i][0] += 1;
+            } else if (enemiesPosition[i][0] == 18 && enemiesPosition[i][1] == 18) {
+                enemiesPosition[i][1] += 1;
+            } else if (enemiesPosition[i][0] == 18 && enemiesPosition[i][1] == 19) {
+                enemiesPosition[i][0] += 1;
+
+                // Este if solo se ejecuta si un enemigo esta a punto de llegar a la posicion de la base (osea, cuando perdemos el juego)
+                // Por ello, reseteamos la fila 20, columna 20 del tablero a 0 (sobreescribiendo el 3 de B base) para un correcto funcionamiento de drawMap
+                gameMap[19][19] = 0;
+            }
+        }
+    }
+}
+
+
 void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool enemiesActivate[6], int towersPosition[6][2], bool towersActivate[6]) {
     // Vamos a crear un arreglo que guardara todo el camino en orden para luego usarlo cuando queramos detectar a un enemigo cerca de la base, pongo 105 para
     //tener suficiente espacio en el arreglo

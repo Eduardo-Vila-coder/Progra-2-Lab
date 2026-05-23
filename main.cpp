@@ -60,7 +60,7 @@ int main() {
         } else if (command == "wave") {
             spawnEnemies(enemiesPosition, enemiesActivate);
         } else if (command == "next") {
-            moveEnemies();
+            moveEnemies(enemiesPosition, enemiesActivate, gameMap);
             attackEnemies(gameMap, money, enemiesPosition, enemiesActivate, towersPosition, towersActivate);
 
             verifyResult();
