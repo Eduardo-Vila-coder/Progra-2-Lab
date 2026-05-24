@@ -419,3 +419,68 @@ void deleteMap(int**& gameMap, const int& length_side) {
     delete[] gameMap;
     gameMap = nullptr;
 }
+
+
+
+
+int verifyResult(int* posicEnemys, bool* vivoEnemys, int numEnemys, int posicBase, bool attack_Iniciado) {
+    if (!attack_Iniciado) {
+        return 0;
+    }
+    
+    int enemys_vivos = 0;
+    
+    for (int i = 0; i < numEnemys; i++) {
+        if (vivoEnemys[i] == true) {
+            enemys_vivos++;
+
+            if (posicEnemys[i] == posicBase) {
+                cout << "La base quedó destruida\n";
+                return -1;
+            }
+        }
+    }
+    
+    if (enemys_vivos == 0) {
+        cout << "Todos los enemigos eliminados\n";
+        return 1;
+    }
+
+    return 0;
+}
+
+void gameStatus(int dinero, int torresColocadas, bool* vivoEnemys, int numEnemys) {
+    int enemys_vivos = 0;
+    
+    if (vivoEnemys != nullptr && numEnemys > 0) {
+        for (int i = 0; i < numEnemys; i++) {
+            if (vivoEnemys[i] == true) {
+                enemys_vivos++;
+            }
+        }
+    }
+    
+    cout << "\n========================================\n";
+    cout << "          SITUACIÓN DEL JUEGO           \n";
+    cout << "========================================\n";
+    cout << "Dinero disponible: " << dinero << " monedas\n"; 
+    cout << "Torres colocadas: " << torresColocadas << "\n";
+    cout << "Enemigos vivos: " << enemys_vivos << "\n";
+    cout << "========================================\n\n";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
