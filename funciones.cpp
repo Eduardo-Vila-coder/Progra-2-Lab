@@ -408,45 +408,35 @@ void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool en
         
     }
 } 
-void verifyResult() {}
-void gameStatus() {}
-
-void deleteMap(int**& gameMap, const int& length_side) {
-    for (int i = 0; i < length_side; i++) {
-        delete[] gameMap[i];
-    }
-
-    delete[] gameMap;
-    gameMap = nullptr;
-}
 
 
 
 
-int verifyResult(int* posicEnemys, bool* vivoEnemys, int numEnemys, int posicBase, bool attack_Iniciado) {
+void verifyResult(int* posicEnemys, bool* vivoEnemys, int numEnemys, int posicBase, bool attack_Iniciado, bool& finDelJuego) {
     if (!attack_Iniciado) {
-        return 0;
+        return; 
     }
     
     int enemys_vivos = 0;
-    
+
     for (int i = 0; i < numEnemys; i++) {
-        if (vivoEnemys[i] == true) {
+        if (vivoEnemys[i] == true) { 
             enemys_vivos++;
 
-            if (posicEnemys[i] == posicBase) {
+            if (posicEnemys[i] == posicBase) { 
                 cout << "La base quedó destruida\n";
-                return -1;
+                finDelJuego = true; 
+                return; 
             }
         }
     }
     
     if (enemys_vivos == 0) {
-        cout << "Todos los enemigos eliminados\n";
-        return 1;
+        cout << "Enemigos eliminados\n";
+        finDelJuego = true; 
+        return; 
     }
-
-    return 0;
+    
 }
 
 void gameStatus(int dinero, int torresColocadas, bool* vivoEnemys, int numEnemys) {
@@ -468,6 +458,19 @@ void gameStatus(int dinero, int torresColocadas, bool* vivoEnemys, int numEnemys
     cout << "Enemigos vivos: " << enemys_vivos << "\n";
     cout << "========================================\n\n";
 }
+
+
+
+
+void deleteMap(int**& gameMap, const int& length_side) {
+    for (int i = 0; i < length_side; i++) {
+        delete[] gameMap[i];
+    }
+
+    delete[] gameMap;
+    gameMap = nullptr;
+}
+
 
 
 
