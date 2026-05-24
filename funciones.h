@@ -12,3 +12,13 @@ void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool en
 void verifyResult();
 void gameStatus();
 void deleteMap(int**& gameMap, const int& length_side);
+
+
+#ifndef FUNCIONES_H
+#define FUNCIONES_H
+
+int verifyResult(int* posicEnemys, bool* vivoEnemys, int numEnemys, int posicBase, bool attack_Iniciado);
+
+void gameStatus(int dinero, int torresColocadas, bool* vivoEnemys, int numEnemys);
+
+#endif
