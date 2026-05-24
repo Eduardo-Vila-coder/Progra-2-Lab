@@ -79,5 +79,72 @@ int main() {
     // Eliminamos el mapa dinámico creado
     deleteMap(gameMap, length_side);
 
+
+
+    int dinero = 300;
+    int torresColocadas = 0;
+    int posicBase = 399;
+    bool attack_Iniciado = false;
+    
+    int* posicEnemys = nullptr;
+    bool* vivoEnemys = nullptr;
+    int numEnemys = 0;
+
+    string comando;
+
+    cout << "Iniciando Tower Defense.\n";
+
+
+    while (true) {
+        cout << "> ";
+        cin >> comando;
+
+        if (comando == "wave") {
+            numEnemys = 5;
+
+
+            posicEnemys = new int[numEnemys];
+            vivoEnemys = new bool[numEnemys];
+            attack_Iniciado = true;
+
+
+            for(int i = 0; i < numEnemys; i++){
+                vivoEnemys[i] = true;
+                posicEnemys[i] = i;
+            }
+
+            cout << "Oleada generada.\n";
+        }
+        else if (comando == "status") {
+
+            gameStatus(dinero, torresColocadas, vivoEnemys, numEnemys);
+        }
+        else if (comando == "next") {
+            if (!attack_Iniciado) {
+                cout << "Oleada aún sin generar.\n";
+                continue;
+            }
+            
+            
+            int estado = verifyResult(posicEnemys, vivoEnemys, numEnemys, posicBase, attack_Iniciado);
+
+            if (estado == 1 || estado == -1) {
+                break;
+            }
+        }
+        else if (comando == "exit") {
+            cout << "Saliendo...\n";
+            break;
+        }
+        else {
+            cout << "Movimiento no reconocido.\n";
+        }
+    }
+
+  
+    if (posicEnemys != nullptr) {
+        delete[] posicEnemys;
+        delete[] vivoEnemys;
+    }
     return 0;
 }
