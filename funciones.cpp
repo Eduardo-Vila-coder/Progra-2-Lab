@@ -248,70 +248,70 @@ void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool en
     int camino_enemigo[105][2];
     int paso = 0;      //Este contador nos sirve para recorrer las posiciones dentro del arreglo
 
-    //Posiciones iniciales
-    camino_enemigo[paso][0] = 1;
-    camino_enemigo[paso][1] = 0;
-    paso++;
-
+    // Primer tramo
+    for (int j = 1; j <= 2; j++) {
+        camino_enemigo[paso][0] = 0;  //0 es el indice de la fila del camino enemigo en el mapa 
+        camino_enemigo[paso][1] = j;  //j es el indice de la columna del camino enemigo en el mapa
+        paso++;                                //Esta misma idea se repetira para todos los tramos
+    }
+    
     // Segundo tramo
     for (int i = 1; i <= 3; i++) {
-        camino_enemigo[paso][0] = i;
-        camino_enemigo[paso][1] = 1;
-        paso++;
-    }
-
-    // Tercer tramo
-    for (int j = 1; j <= 11; j++) {
-        camino_enemigo[paso][0] = 4;
-        camino_enemigo[paso][1] = j;
-        paso++;
-    }
-
-    // Cuarto tramo
-    for (int i = 5; i <= 8; i++) {
-        camino_enemigo[paso][0] = i;
-        camino_enemigo[paso][1] = 11;
-        paso++;
-    }
-
-    // Quinto tramo
-    for (int j = 11; j >= 2; j--) {
-        camino_enemigo[paso][0] = 9;
-        camino_enemigo[paso][1] = j;
-        paso++;
-    }
-
-    // Sexto tramo
-    for (int i = 10; i <= 13; i++) {
-        camino_enemigo[paso][0] = i;
+        camino_enemigo[paso][0] = i; 
         camino_enemigo[paso][1] = 2;
         paso++;
     }
-
+    
+    // Tercer tramo
+    for (int j = 3; j <= 12; j++) {
+        camino_enemigo[paso][0] = 3;   
+        camino_enemigo[paso][1] = j;  
+        paso++;
+    }
+    
+    // Cuarto tramo
+    for (int i = 4; i <= 10; i++) {
+        camino_enemigo[paso][0] = i;
+        camino_enemigo[paso][1] = 12;
+        paso++;
+    }
+    
+    // Quinto tramo
+    for (int j = 11; j > 2; j--) {
+        camino_enemigo[paso][0] = 10;
+        camino_enemigo[paso][1] = j;
+        paso++;
+    }
+    
+    // Sexto tramo
+    for (int i = 11; i <= 13; i++) {
+        camino_enemigo[paso][0] = i;
+        camino_enemigo[paso][1] = 3;
+        paso++;
+    }
+    
     // Septimo tramo
-    for (int j = 2; j <= 17; j++) {
-        camino_enemigo[paso][0] = 14;
+    for (int j = 4; j <= 18; j++) {
+        camino_enemigo[paso][0] = 13;
+        camino_enemigo[paso][1] = j;
+        paso++;
+    }
+    
+    // Octavo tramo 
+    for (int i = 14; i <= 17; i++) {
+        camino_enemigo[paso][0] = i;
+        camino_enemigo[paso][1] = 18;
+        paso++;
+    }
+
+    //El ultimo tramo seria
+    for(int j = 18; j <= 19; j++) {
+        camino_enemigo[paso][0] = 18;
         camino_enemigo[paso][1] = j;
         paso++;
     }
 
-    // Octavo tramo
-    for (int i = 15; i <= 19; i++) {
-        camino_enemigo[paso][0] = i;
-        camino_enemigo[paso][1] = 17;
-        paso++;
-    }
-
-    // Posiciones antes de la base
-    camino_enemigo[paso][0] = 19;
-    camino_enemigo[paso][1] = 18;
-    paso++;
-
-    camino_enemigo[paso][0] = 19;
-    camino_enemigo[paso][1] = 19;
-    paso++;
-
-    // Guardamos el tamano total que tiene camino
+    // Guardamos el tamano total que tiene EL camino de enemigos
     int camino_enemigo_Length = paso;
 
 
@@ -332,16 +332,15 @@ void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool en
             continue;
         }
 
-        
-
         // Aqui obtenemos la posicion de la torre
         int fila_torre = towersPosition[torre][0];
         int columna_torre = towersPosition[torre][1];
 
+
+
         // Estas variables nos seviran para guardar el enemigo mas cercano y asi poder eliminarlo
         int enemigo_cercano = -1;
         int paso_cercano = -1;
-
 
         //Ahora, vamos a revisar todos los enemigos
         for (int enemigo = 0; enemigo<6; enemigo++) {
@@ -386,7 +385,7 @@ void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool en
         //Por ultimo, cuando encontremos al enemigo mas cercano, lo tenemos que eliminar 
         if (enemigo_cercano != -1) {
             // Guardamos la posicion del enemigo que vamos a eliminar
-            int fila_enemigo_cercano    = enemiesPosition[enemigo_cercano][0];
+            int fila_enemigo_cercano = enemiesPosition[enemigo_cercano][0];
             int columna_enemigo_cercano = enemiesPosition[enemigo_cercano][1];
 
             // Borramos al enemigo de nuestro mapa
