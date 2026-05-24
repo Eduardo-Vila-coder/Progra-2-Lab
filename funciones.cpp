@@ -439,6 +439,7 @@ void verifyResult(int* posicEnemys, bool* vivoEnemys, int numEnemys, int posicBa
     
 }
 
+
 void gameStatus(int dinero, int torresColocadas, bool* vivoEnemys, int numEnemys) {
     int enemys_vivos = 0;
     
