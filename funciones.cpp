@@ -42,8 +42,6 @@ void initGame(int**& gameMap, const int& length_side, int towersPosition[6][2], 
         towersPosition[i][1] = -1;
         towersActivate[i] = false;
     }
-
-    cout<< "----------Mapa creado----------"<< endl;
         
     
 }
@@ -188,7 +186,7 @@ void placeTower(int x, int y, int &money, int** gameMap, int towersPosition[6][2
 void spawnEnemies(int enemiesPosition[6][2], bool enemiesActivate[6]) {
     srand(time(nullptr));
 
-    //Creamos un arreglo local con las posiciones iniciales de todos los enemigos considerando el numero maximo
+    //Creamos un arreglo local con las posiciones iniciales de todos los enemigos considerando el numero maximo de ellos que puede aparecer
     int start_position[6][2]={{0, 1}, {0, 2}, {1, 2},
     {2, 2}, {3, 2}, {3, 3}
     };
@@ -239,14 +237,23 @@ void moveEnemies(int enemiesPosition[6][2], const bool enemiesActivate[6], int**
             }
         }
     }
+
+    // Si hay enemigos activos, estos avanzaron con esta funcion. Por ello, evaluamos si hay enemigos activos para la impresion de "Enemigos avanzaron" del comando next
+    for (size_t i = 0; i < 6; i++) {
+        if (enemiesActivate[i]) {
+            cout << "Enemigos avanzaron\n";
+            break;
+        }
+    }
 }
 
 
 void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool enemiesActivate[6], int towersPosition[6][2], bool towersActivate[6]) {
-    // Vamos a crear un arreglo que guardara todo el camino en orden para luego usarlo cuando queramos detectar a un enemigo cerca de la base, pongo 105 para
-    //tener suficiente espacio en el arreglo
-    int camino_enemigo[105][2];
+    // Vamos a crear un arreglo que guardara todo el camino en orden para luego usarlo cuando queramos detectar a un enemigo cerca de la base
+    // La cantidad de pasos de este camino es 55 (sin incluir la posicion de la base, porque este lugar está fuera del rango de ataque de cualquier torre)
+    int camino_enemigo[55][2];
     int paso = 0;      //Este contador nos sirve para recorrer las posiciones dentro del arreglo
+    bool huboAtaque = false;
 
     // Primer tramo
     for (int j = 1; j <= 2; j++) {
@@ -400,19 +407,34 @@ void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool en
             // Desactivamos la torre permanentemente
             towersActivate[torre] = false;
 
+            huboAtaque = true;
+
             
     
         }
 
         
     }
+
+    if (huboAtaque) {
+        cout << "Torres atacaron\nEstado actualizado\n";
+    }
 } 
 
 
 
 
-void verifyResult(int enemiesPosition[6][2], bool enemiesActivate[6], bool& victory, bool& defeat, bool attack_iniciado) {
-    // Si aún no se ha llamado a la oleada
+void verifyResult(int enemiesPosition[6][2], bool enemiesActivate[6], bool& victory, bool& defeat) {
+    bool attack_iniciado = false;
+
+    // Comprobamos si la oleada ya ha sido generada (basta con saber que un enemigo no tenga las posiciones por defecto)
+    for (size_t i = 0; i < 6; i++) {
+        if (enemiesPosition[i][0] != -1 && enemiesPosition[i][1] != -1) {
+            attack_iniciado = true;
+        }
+    }
+
+    // Si aún no se ha llamado a la oleada de enemigos
     if (!attack_iniciado) {
         return;
     }
@@ -426,7 +448,6 @@ void verifyResult(int enemiesPosition[6][2], bool enemiesActivate[6], bool& vict
 
 
             if (enemiesPosition[i][0] == 19 && enemiesPosition[i][1] == 19) {
-                cout << "La base fue destruida :(\n";
                 defeat = true;
                 return;
             }
@@ -435,7 +456,6 @@ void verifyResult(int enemiesPosition[6][2], bool enemiesActivate[6], bool& vict
 
     // Se revisaron los 6 espacios y no hay nadie activo
     if (enemiesAlive == 0) {
-        cout << "Todos los enemigos están eliminados\n";
         victory = true;
         return;
     }
@@ -443,9 +463,8 @@ void verifyResult(int enemiesPosition[6][2], bool enemiesActivate[6], bool& vict
 
 
 
-void gameStatus(int money, int towersPlaced, bool enemiesActivate[6]) {
-    int enemiesAlive = 0;
-
+void gameStatus(int money, int towersPosition[6][2], bool enemiesActivate[6]) {
+    int enemiesAlive = 0, towersPlaced = 0;
 
     for (int i = 0; i < 6; i++) {
         if (enemiesActivate[i] == true) {
@@ -453,13 +472,15 @@ void gameStatus(int money, int towersPlaced, bool enemiesActivate[6]) {
         }
     }
 
-    cout << "\n----------------------------------------\n";
-    cout << "          SITUACIÓN DEL JUEGO              \n";
-    cout << "-----------------------------------------\n";
-    cout << "Monedas disponibles: " << money << " monedas\n";
-    cout << "Torres colocadas: " << towersPlaced << "\n";
-    cout << "Enemigos vivos: " << enemiesAlive << "\n";
-    cout << "-----------------------------------------\n\n";
+    for (size_t i = 0; i < 6; i++) {
+        if (towersPosition[i][0] != -1 && towersPosition[i][1] != -1) {
+            towersPlaced++;
+        }
+    }
+
+    cout << "Dinero: " << money << "\n";
+    cout << "Torres: " << towersPlaced << "\n";
+    cout << "Enemigos: " << enemiesAlive << "\n\n";
 }
 
 

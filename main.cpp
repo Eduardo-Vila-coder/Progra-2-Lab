@@ -19,12 +19,18 @@ int main() {
     // Declaramos la variable que almacenara el comando introducido por el usuario
     string command = "";
 
+    do {
+        cout << "$: ";
+        cin >> command;
+    } while (command != "init");
+
     // Sera actualizado por spawnEnemies()
     // Cada fila representa un enemigo, y cada columna almacena sus coordenadas (x, y) en ese orden
     // El maximo numero de enemigos posible es 6
-    int enemiesPosition[6][2] = {};
+    // Inicializamos las coordenadas de cada enemigo en {-1, -1}
+    int enemiesPosition[6][2] = {{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}};
     //Creamos un arreglo para verificar si un enemigo esta activo o no
-    bool enemiesActivate[6] = {};
+    bool enemiesActivate[6] = {false, false, false, false, false, false};
 
     // Sera actualizado por placeTower()
     // Cada fila representa una torre, y cada columna almacena sus coordenadas (x, y) en ese orden
@@ -44,34 +50,40 @@ int main() {
     initGame(gameMap, length_side, towersPosition, towersActivate);
 
     cout << "Welcome to the world of tower defense xyz\n";
-    //gameStatus();   // descomentar pronto
+    gameStatus(money, towersPosition, enemiesActivate);
 
     do {
-        cout << "Comando: ";
+        cout << "$: ";
         cin >> command;
 
         if (command == "map") {
             drawMap(gameMap, length_side, towersPosition, enemiesPosition, towersActivate, enemiesActivate);
         } else if (command == "status") {
-            //gameStatus();  // descomentar pronto
+            gameStatus(money, towersPosition, enemiesActivate);
         } else if (command == "place") {
             cin >> x >> y;
             placeTower(x, y, money, gameMap, towersPosition, towersActivate, towerCost);
         } else if (command == "wave") {
             spawnEnemies(enemiesPosition, enemiesActivate);
+            gameStatus(money, towersPosition, enemiesActivate);
         } else if (command == "next") {
             moveEnemies(enemiesPosition, enemiesActivate, gameMap);
             attackEnemies(gameMap, money, enemiesPosition, enemiesActivate, towersPosition, towersActivate);
 
-            //verifyResult();   // descomentar pronto
+            verifyResult(enemiesPosition, enemiesActivate, victory, defeat);
+        } else if (command == "exit") {
+            cout << "El juego ha finalizado\n";
+            break;
         } else {
             cout << "Not recognized command\n";
         }
     } while (!victory && !defeat);
 
     if (victory) {
+        drawMap(gameMap, length_side, towersPosition, enemiesPosition, towersActivate, enemiesActivate);
         cout << "GANASTE - Todos los enemigos fueron eliminados\n";
     } else if (defeat) {
+        drawMap(gameMap, length_side, towersPosition, enemiesPosition, towersActivate, enemiesActivate);
         cout << "GAME OVER - La base fue destruida\n";
     }
 
