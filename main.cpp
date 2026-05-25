@@ -14,7 +14,7 @@ const int rewardPerEnemy = 50;
 int main() {
     // Declaramos el mapa 20 x 20 y la cantidad inicial de dinero
     int** gameMap = nullptr;
-    int money = 300 * 2;
+    int money = 300;
 
     // Declaramos la variable que almacenara el comando introducido por el usuario
     string command = "";
@@ -44,7 +44,7 @@ int main() {
     initGame(gameMap, length_side, towersPosition, towersActivate);
 
     cout << "Welcome to the world of tower defense xyz\n";
-    gameStatus();
+    //gameStatus();   // descomentar pronto
 
     do {
         cout << "Comando: ";
@@ -53,7 +53,7 @@ int main() {
         if (command == "map") {
             drawMap(gameMap, length_side, towersPosition, enemiesPosition, towersActivate, enemiesActivate);
         } else if (command == "status") {
-            gameStatus();
+            //gameStatus();  // descomentar pronto
         } else if (command == "place") {
             cin >> x >> y;
             placeTower(x, y, money, gameMap, towersPosition, towersActivate, towerCost);
@@ -63,7 +63,7 @@ int main() {
             moveEnemies(enemiesPosition, enemiesActivate, gameMap);
             attackEnemies(gameMap, money, enemiesPosition, enemiesActivate, towersPosition, towersActivate);
 
-            verifyResult();
+            //verifyResult();   // descomentar pronto
         } else {
             cout << "Not recognized command\n";
         }
@@ -78,72 +78,6 @@ int main() {
 
     // Eliminamos el mapa dinámico creado
     deleteMap(gameMap, length_side);
-
-
-
-    
-    int dinero = 300;
-    int torresColocadas = 0;
-    int posicBase = 399; 
-    bool attack_Iniciado = false;
-    
- 
-    bool finDelJuego = false; 
-    
-    int* posicEnemys = nullptr;
-    bool* vivoEnemys = nullptr;
-    int numEnemys = 0;
-
-    string comando;
-
-    cout << "Iniciando Tower Defense.\n";
-
-    while (true) {
-        cout << "> ";
-        cin >> comando;
-
-        if (comando == "wave") {
-            numEnemys = 5; 
-            posicEnemys = new int[numEnemys];
-            vivoEnemys = new bool[numEnemys];
-            attack_Iniciado = true;
-            
-            for(int i = 0; i < numEnemys; i++){
-                vivoEnemys[i] = true;
-                posicEnemys[i] = i; 
-            }
-            cout << "Oleada generada.\n";
-        }
-        else if (comando == "status") {
-            gameStatus(dinero, torresColocadas, vivoEnemys, numEnemys);
-        }
-        else if (comando == "next") {
-            if (!attack_Iniciado) {
-                cout << "Oleada aún sin generar.\n";
-                continue;
-            }
-            
-           
-            verifyResult(posicEnemys, vivoEnemys, numEnemys, posicBase, attack_Iniciado, finDelJuego);
-            
-           
-            if (finDelJuego == true) {
-                break;
-            }
-        }
-        else if (comando == "exit") {
-            cout << "Saliendo..\n";
-            break;
-        }
-        else {
-            cout << "Comando no reconocido.\n";
-        }
-    }
-
-    if (posicEnemys != nullptr) {
-        delete[] posicEnemys;
-        delete[] vivoEnemys;
-    }
 
     return 0;
 }

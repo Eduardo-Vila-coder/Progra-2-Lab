@@ -79,7 +79,7 @@ void drawMap(int** gameMap,const int length_side, int towersPosition[6][2], int 
 
             //Verificamos si hay torre en alguna posicion para imprimirla
             for (int k=0; k<6; k++) {
-                if (i==towersPosition[k][0] && j==towersPosition[k][1] && towersActivate[k]==true) {
+                if (i==towersPosition[k][0] && j==towersPosition[k][1]) {
                     draw=true;
                     cout << setw(4) << ("T" + to_string(k + 1));
                 }
@@ -389,7 +389,7 @@ void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool en
             int columna_enemigo_cercano = enemiesPosition[enemigo_cercano][1];
 
             // Borramos al enemigo de nuestro mapa
-            gameMap[fila_enemigo_cercano][columna_enemigo_cercano] = 1;
+            gameMap[fila_enemigo_cercano][columna_enemigo_cercano] = 0;
 
             // Luego tenemos que poner al enemigo como muerto
             enemiesActivate[enemigo_cercano] = false;
