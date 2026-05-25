@@ -411,52 +411,55 @@ void attackEnemies(int** gameMap, int &money, int enemiesPosition[6][2], bool en
 
 
 
-void verifyResult(int* posicEnemys, bool* vivoEnemys, int numEnemys, int posicBase, bool attack_Iniciado, bool& finDelJuego) {
-    if (!attack_Iniciado) {
-        return; 
+void verifyResult(int enemiesPosition[6][2], bool enemiesActivate[6], bool& victory, bool& defeat, bool attack_iniciado) {
+    // Si aún no se ha llamado a la oleada
+    if (!attack_iniciado) {
+        return;
     }
-    
-    int enemys_vivos = 0;
 
-    for (int i = 0; i < numEnemys; i++) {
-        if (vivoEnemys[i] == true) { 
-            enemys_vivos++;
+    int enemiesAlive = 0;
 
-            if (posicEnemys[i] == posicBase) { 
-                cout << "La base quedó destruida\n";
-                finDelJuego = true; 
-                return; 
+    for (int i = 0; i < 6; i++) {
+
+        if (enemiesActivate[i] == true) {
+            enemiesAlive++; // Contamos a este enemigo como vivo
+
+
+            if (enemiesPosition[i][0] == 19 && enemiesPosition[i][1] == 19) {
+                cout << "La base fue destruida :(\n";
+                defeat = true;
+                return;
             }
         }
     }
-    
-    if (enemys_vivos == 0) {
-        cout << "Enemigos eliminados\n";
-        finDelJuego = true; 
-        return; 
+
+    // Se revisaron los 6 espacios y no hay nadie activo
+    if (enemiesAlive == 0) {
+        cout << "Todos los enemigos están eliminados\n";
+        victory = true;
+        return;
     }
-    
 }
 
 
-void gameStatus(int dinero, int torresColocadas, bool* vivoEnemys, int numEnemys) {
-    int enemys_vivos = 0;
-    
-    if (vivoEnemys != nullptr && numEnemys > 0) {
-        for (int i = 0; i < numEnemys; i++) {
-            if (vivoEnemys[i] == true) {
-                enemys_vivos++;
-            }
+
+void gameStatus(int money, int towersPlaced, bool enemiesActivate[6]) {
+    int enemiesAlive = 0;
+
+
+    for (int i = 0; i < 6; i++) {
+        if (enemiesActivate[i] == true) {
+            enemiesAlive++;
         }
     }
-    
-    cout << "\n========================================\n";
-    cout << "          SITUACIÓN DEL JUEGO           \n";
-    cout << "========================================\n";
-    cout << "Dinero disponible: " << dinero << " monedas\n"; 
-    cout << "Torres colocadas: " << torresColocadas << "\n";
-    cout << "Enemigos vivos: " << enemys_vivos << "\n";
-    cout << "========================================\n\n";
+
+    cout << "\n----------------------------------------\n";
+    cout << "          SITUACIÓN DEL JUEGO              \n";
+    cout << "-----------------------------------------\n";
+    cout << "Monedas disponibles: " << money << " monedas\n";
+    cout << "Torres colocadas: " << towersPlaced << "\n";
+    cout << "Enemigos vivos: " << enemiesAlive << "\n";
+    cout << "-----------------------------------------\n\n";
 }
 
 
