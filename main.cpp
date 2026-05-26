@@ -19,6 +19,7 @@ int main() {
     // Declaramos la variable que almacenara el comando introducido por el usuario
     string command = "";
 
+    // Implementamos un bucle para el comando init
     do {
         cout << "$: ";
         cin >> command;
