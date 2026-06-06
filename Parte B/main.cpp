@@ -1,16 +1,41 @@
 #include <iostream>
+#include <string>
 
-// TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+// Ir eliminando los siguientes headers conforme vayan siendo accedidos desde otros de los headers
+#include "Game.h"
+#include "Map.h"
+#include "Enemy.h"
+#include "Tower.h"
+#include "Camera.h"
+
+using namespace std;
+
+// Definimos el nuevo tamanio del lado del tablero
+const int length_side = 40;
+
+// Definimos el costo por torre y la recompensa por enemigo eliminado
+const int towerCost = 100;
+const int rewardPerEnemy = 50;
+
 int main() {
-    // TIP Press <shortcut actionId="RenameElement"/> when your caret is at the <b>lang</b> variable name to see how CLion can help you rename it.
-    auto lang = "C++";
-    std::cout << "Hello and welcome to " << lang << "!\n";
+    // Declaramos el mapa 40 x 40 y la cantidad inicial de dinero
+    int** gameMap = nullptr;
+    int money = 300;
 
-    for (int i = 1; i <= 5; i++) {
-        // TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        std::cout << "i = " << i << std::endl;
-    }
+    // Declaramos la variable que almacenara el comando introducido por el usuario
+    string command = "";
+
+    // Implementamos un bucle para el comando init
+    do {
+        cout << "$: ";
+        cin >> command;
+    } while (command != "init");
+
+
+    /// Creacion e importacion de todos los objetos necesarios para el funcionamiento del juego
+    ////////////////////////////////////
+    ///
+    // Motrar automaticamente la ventana visible inicial
 
     return 0;
-    // TIP See CLion help at <a href="https://www.jetbrains.com/help/clion/">jetbrains.com/help/clion/</a>. Also, you can try interactive lessons for CLion by selecting 'Help | Learn IDE Features' from the main menu.
 }
