@@ -1,4 +1,4 @@
-#include "../funciones.h"
+#include "funciones.h"
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
