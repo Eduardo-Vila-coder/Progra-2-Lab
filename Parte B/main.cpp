@@ -106,6 +106,7 @@ int main() {
     }
 
 
+
     // Eliminamos el mapa dinámico creado
     // deleteMap(gameMap, length_side);
 
