@@ -73,6 +73,8 @@ void Tower:: newShots() {
 };
 //#2 creamos una funcion que nos indica si la torre puede disparar o no (dependiendo de la cantidad de disparos que tenga)
 bool Tower:: canShot() {
-    if (towerActivate==true && shots>=0)
+    if (towerActivate==true && shots>0)
         return true;
+    else
+        return false;
 };
