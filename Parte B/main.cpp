@@ -34,7 +34,7 @@ int main() {
 
     /// Creacion e importacion de todos los objetos necesarios para el funcionamiento del juego
     ////////////////////////////////////
-    ///
+    ////
     // Motrar automaticamente la ventana visible inicial por medio de una funcion o una clase
     // drawWindow()
 
