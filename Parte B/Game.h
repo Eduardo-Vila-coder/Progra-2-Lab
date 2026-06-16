@@ -3,8 +3,6 @@
 
 class Game {
 public:
-    void initGame();
-
     void gameStatus();
 
     void verifyResult();
@@ -18,8 +16,6 @@ public:
     void saveGame();
 
     void loadGame();
-
-    void deleteMap(int**& gameMap, const int& length_side);
 };
 
 
