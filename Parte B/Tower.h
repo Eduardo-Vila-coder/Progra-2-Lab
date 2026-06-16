@@ -36,7 +36,6 @@ private:
     //funciones:
     //#1 restar la cantidad de disparos y desactivar la torre cuando ya no tenga disparos disponibles
     void newShots();
-
 };
 
 

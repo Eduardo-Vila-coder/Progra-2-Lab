@@ -34,8 +34,6 @@ bool Tower::getTowersActivate() {
 int Tower::getShots() {
     return this->shots;
 };
-
-
 void Tower::setTowersActivate(bool towersActivate) {
     this->towerActivate=towersActivate;
 };
