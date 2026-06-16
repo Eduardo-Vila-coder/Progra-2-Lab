@@ -17,7 +17,7 @@ private:
 
     public:
     Tower(); //constructor por defecto
-    Tower(int row, int col, int damage, int shots, int attackRange, int rango_ataque[12][2]); //constructor de asignación
+    Tower(int row, int col, int damage, int shots); //constructor de asignación
     ~Tower();
 
     //getters and setters
@@ -26,19 +26,16 @@ private:
     int getDamage();
     bool getTowersActivate();
     int getShots();
-    int getAttackRange();
 
     void setTowersActivate(bool towersActivate);
     void setShots(int shots);
     void setRow(int row);
     void setCol(int col);
     void setDamage(int damage);
-    void setAttackRange(int attackRange);
 
     //funciones:
     //#1 restar la cantidad de disparos y desactivar la torre cuando ya no tenga disparos disponibles
     void newShots();
-
 };
 
 
