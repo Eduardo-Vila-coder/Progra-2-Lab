@@ -1,24 +1,26 @@
 #ifndef PARTE_B_GAME_H
 #define PARTE_B_GAME_H
 
+class Game {
+public:
+    void initGame();
 
-void initGame();
+    void gameStatus();
 
-void gameStatus();
+    void verifyResult();
 
-void verifyResult();
+    void placeTower();
 
-void placeTower();
+    void moveEnemies();
 
-void moveEnemies();
+    void attackEnemies();
 
-void attackEnemies();
+    void saveGame();
 
-void saveGame();
+    void loadGame();
 
-void loadGame();
-
-void deleteMap(int**& gameMap, const int& length_side);
+    void deleteMap(int**& gameMap, const int& length_side);
+};
 
 
 #endif //PARTE_B_GAME_H

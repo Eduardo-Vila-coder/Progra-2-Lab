@@ -1,22 +1,22 @@
 #include "Game.h"
 
-void initGame() {}
+void Game::initGame() {}
 
-void gameStatus() {}
+void Game::gameStatus() {}
 
-void verifyResult() {}
+void Game::verifyResult() {}
 
-void placeTower() {}
+void Game::placeTower() {}
 
-void moveEnemies() {}
+void Game::moveEnemies() {}
 
-void attackEnemies() {}
+void Game::attackEnemies() {}
 
-void saveGame() {}
+void Game::saveGame() {}
 
-void loadGame() {}
+void Game::loadGame() {}
 
-void deleteMap(int**& gameMap, const int& length_side) {
+void Game::deleteMap(int**& gameMap, const int& length_side) {
     for (int i = 0; i < length_side; i++) {
         delete[] gameMap[i];
     }
