@@ -18,10 +18,11 @@ private:
     int damage; //daño causado
     bool towerActivate; //para verificar si la torre está activa
     int shots; //cantidad de disparos que tiene la torre, se disminuirá conforme los ejecute
+    int rango_ataque[12][2]= {{ 0,-2},{ 0, 2},{-2, 0},{ 2, 0},{-1,-2},{ 1,-2},{-1, 2},{ 1, 2},{-2,-1},{ 2,-1},{-2, 1},{ 2, 1}};;
 
     public:
     Tower(); //constructor por defecto
-    Tower(int row, int col, int damage, int shots, int attackRange); //constructor de asignación
+    Tower(int row, int col, int damage, int shots, int attackRange, int rango_ataque[12][2]); //constructor de asignación
     ~Tower();
 
     //getters and setters

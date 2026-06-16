@@ -11,7 +11,7 @@ Tower::Tower() {
     this->towerActivate=false;
 }
 
-Tower::Tower(int row, int col, int damage, int shots, int attackRange) {
+Tower::Tower(int row, int col, int damage, int shots, int attackRange, int rango_ataque[12][2]) {
     this->damage=damage;
     this->row=row;
     this->col=col;
