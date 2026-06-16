@@ -1,18 +1,16 @@
 #include "Tower.h"
 
 Tower::Tower() {
-    this->attackRange=2;
     this->damage=2;
     this->shots=5;
-    this->towerActivate=false;
+    this->towerActivate=true;
 }
 
-Tower::Tower(int row, int col, int damage, int shots, int attackRange, int rango_ataque[12][2]) {
+Tower::Tower(int row, int col, int damage, int shots) {
     this->damage=damage;
     this->row=row;
     this->col=col;
     this->shots=shots;
-    this->attackRange=attackRange;
     this->towerActivate = true;
 }
 
@@ -36,9 +34,7 @@ bool Tower::getTowersActivate() {
 int Tower::getShots() {
     return this->shots;
 };
-int Tower::getAttackRange() {
-    return this->attackRange;
-};
+
 
 void Tower::setTowersActivate(bool towersActivate) {
     this->towerActivate=towersActivate;
@@ -54,9 +50,6 @@ void Tower::setCol(int col) {
 };
 void Tower::setDamage(int damage) {
     this->damage=damage;
-};
-void Tower::setAttackRange(int attackRange) {
-    this->attackRange=attackRange;
 };
 
 //funciones:
