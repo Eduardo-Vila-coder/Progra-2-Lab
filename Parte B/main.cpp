@@ -36,7 +36,7 @@ int main() {
     ////////////////////////////////////
     ///
     // Motrar automaticamente la ventana visible inicial por medio de una funcion o una clase
-    // mostrarVentana()
+    // drawWindow()
 
     // La cantidad de posiciones de desplazamiento en el movimiento de la camara
     int n = 0;
@@ -47,7 +47,7 @@ int main() {
     // Seran modificados por verifyResult()
     bool victory = false, defeat = false;
 
-    // Inicializamos el juego, objeto mapa (arreglo dinamico 40 x 40) y objeto camara
+    // Inicializamos el objeto game, objeto mapa (arreglo dinamico 40 x 40) y objeto camara
     initGame();
 
     cout << "Welcome to the world of tower defense xyz\n";
