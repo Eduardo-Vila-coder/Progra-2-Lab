@@ -1,8 +1,8 @@
 #include "Tower.h"
 
 Tower::Tower() {
-    this->damage=2;
-    this->shots=5;
+    this->damage=1;
+    this->shots=1;
     this->towerActivate=true;
 }
 

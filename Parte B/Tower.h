@@ -10,10 +10,10 @@ class Tower {
 private:
     int row; //coordenadas de la torre
     int col;
-    int damage; //daño causado
+    int damage; //daño que causa
     bool towerActivate; //para verificar si la torre está activa
     int shots; //cantidad de disparos que tiene la torre, se disminuirá conforme los ejecute
-    int attackRange[12][2]= {{ 0,-2},{ 0, 2},{-2, 0},{ 2, 0},{-1,-2},{ 1,-2},{-1, 2},{ 1, 2},{-2,-1},{ 2,-1},{-2, 1},{ 2, 1}};;
+    int attackRange[12][2]= {{ 0,-2},{ 0, 2},{-2, 0},{ 2, 0},{-1,-2},{ 1,-2},{-1, 2},{ 1, 2},{-2,-1},{ 2,-1},{-2, 1},{ 2, 1}};
 
     public:
     Tower(); //constructor por defecto

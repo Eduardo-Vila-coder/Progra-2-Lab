@@ -18,10 +18,6 @@ const int towerCost = 100;
 const int rewardPerEnemy = 50;
 
 int main() {
-    // Declaramos el mapa 40 x 40 y la cantidad inicial de dinero
-    int** gameMap = nullptr;
-    int money = 300;
-
     // Declaramos la variable que almacenara el comando introducido por el usuario
     string command = "";
 
@@ -30,13 +26,16 @@ int main() {
         cout << "$: ";
         cin >> command;
     } while (command != "init");
-
-
     /// Creacion e importacion de todos los objetos necesarios para el funcionamiento del juego
     ////////////////////////////////////
-    ///
-    // Motrar automaticamente la ventana visible inicial por medio de una funcion o una clase
-    // mostrarVentana()
+    ////
+
+    // Creamos el objeto Game junto al objeto mapa (arreglo dinamico 40 x 40) y al objeto camara (recordar que es una composicion)
+    // Realizamos la inicialización del mapa creandolo desde un archivo (savedGame.txt)
+    // Si savedGame.txt no posee una partida previa guardada, definimos cantidad inicial de dinero = 300
+
+    // Motrar automaticamente la ventana visible inicial por medio de un metodo de Camera
+    // drawWindow()
 
     // La cantidad de posiciones de desplazamiento en el movimiento de la camara
     int n = 0;
@@ -47,9 +46,6 @@ int main() {
     // Seran modificados por verifyResult()
     bool victory = false, defeat = false;
 
-    // Inicializamos el juego, objeto mapa (arreglo dinamico 40 x 40) y objeto camara
-    initGame();
-
     cout << "Welcome to the world of tower defense xyz\n";
     gameStatus();
 
@@ -58,20 +54,24 @@ int main() {
         cin >> command;
 
         if (command == "map") {
-            // Muestra parte del mapa visible (puede ser metodo del objeto camara)
+            // Muestra parte del mapa visible (metodo del objeto camara)
             drawWindow();
         } else if (command == "up") {
             cin >> n;
             // Metodo del objeto camara
+            moveUp();
         } else if (command == "down") {
             cin >> n;
             // Metodo del objeto camara
+            moveDown();
         }  else if (command == "left") {
             cin >> n;
             // Metodo del objeto camara
+            moveLeft();
         } else if (command == "right") {
             cin >> n;
             // Metodo del objeto camara
+            moveRight();
         } else if (command == "status") {
             gameStatus();
         } else if (command == "place") {
@@ -79,6 +79,7 @@ int main() {
             placeTower();
         } else if (command == "wave") {
             // creacion de objetos enemigo
+            spawnEnemies();
             gameStatus();
         } else if (command == "next") {
             moveEnemies();
@@ -107,8 +108,7 @@ int main() {
 
 
 
-    // Eliminamos el mapa dinámico creado
-    // deleteMap(gameMap, length_side);
+    //Usamos el destructor de la clase Map para eliminar el mapa dinámico creado
 
     return 0;
 }
