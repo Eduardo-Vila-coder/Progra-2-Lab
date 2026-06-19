@@ -37,7 +37,7 @@ private:
     //#1 restar la cantidad de disparos y desactivar la torre cuando ya no tenga disparos disponibles
 	void newShots();
 
-	friend void operator-( const Tower &t, int shot);
+	void operator-(int disparo);
 
 
 };
