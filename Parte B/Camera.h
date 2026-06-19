@@ -13,7 +13,7 @@ int limiteAncho;
 int limiteAlto;
 
 public:
-Camera(int ancho_Visor, int alto Visor, int ancho_Map, int alto_Map);
+Camera(int ancho_Visor, int alto_Visor, int ancho_Map, int alto_Map);
 ~Camera();
 
 void mover(int movX, int movY);
