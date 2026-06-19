@@ -31,5 +31,3 @@ public:
 };
 
 #endif //PARTE_B_CAMERA_H
-
-#endif //PARTE_B_CAMERA_H
