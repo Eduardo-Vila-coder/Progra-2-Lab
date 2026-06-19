@@ -9,19 +9,21 @@
 
 using namespace std;
 
-Camera::Camera(int ancho_Visor, int alto_Visor, int anchoMap, int altoMap){
-  ancho= ancho_Visor;
-  alto= alto_Visor;
-  limiteAncho= anchoMap;
-  limiteAlto= altoMap;
-  x=0;
-  y=0;
+Camera::Camera(int ancho_Visor, int alto_Visor, int anchoMap, int altoMap) {
+    ancho = ancho_Visor;
+    alto = alto_Visor;
+    limiteAncho = anchoMap;
+    limiteAlto = altoMap;
+    x = 0;
+    y = 0;
 }
 
-Camera::~Camera(){
-  void Camera::fijarPosicion(int nuevoX, int nuevoY) {
-    x=nuevoX;
-    y=nuevoY;
+Camera::~Camera() {
+}
+
+void Camera::fijarPosicion(int nuevoX, int nuevoY) {
+    x = nuevoX;
+    y = nuevoY;
 
     if (x < 0) x = 0;
     if (y < 0) y = 0;
@@ -29,16 +31,16 @@ Camera::~Camera(){
     if (y > limiteAlto - alto) y = limiteAlto - alto;
 }
 
-void Camara::mover(int movX, int movY) {
+void Camera::mover(int movX, int movY) {
     fijarPosicion(x + movX, y + movY);
 }
 
-int Camara::obtenX() const { return x; }
-int Camara::obtenY() const { return y; }
-int Camara::obtenAncho() const { return ancho; }
-int Camara::obtenAlto() const { return alto; }
+int Camera::obtenX() const { return x; }
+int Camera::obtenY() const { return y; }
+int Camera::obtenAncho() const { return ancho; }
+int Camera::obtenAlto() const { return alto; }
 
-void Camara::mostrar(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bool torresActiv[6], bool enemigosActiv[6]) const {
+void Camera::mostrar(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bool torresActiv[6], bool enemigosActiv[6]) const {
     if (mapa == nullptr) return;
 
     cout << setw(6) << " ";
@@ -63,12 +65,12 @@ void Camara::mostrar(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bo
             }
 
             for (int k = 0; k < 6; k++) {
-                if (i == posiTorres[k][0] && j == posiTorres[k][1]) {
+                if (i == posiTorres[k][0] && j == posiTorres[k][1] && torresActiv[k]) {
                     dibujado = true;
                     cout << setw(4) << ("T" + to_string(k + 1));
                     break;
                 }
-                else if (i == posiEnemies[k][0] && j == posiEnemies[k][1] && enemiesActiv[k] == true) {
+                else if (i == posiEnemies[k][0] && j == posiEnemies[k][1] && enemigosActiv[k]) {
                     dibujado = true;
                     cout << setw(4) << "E";
                     break;
