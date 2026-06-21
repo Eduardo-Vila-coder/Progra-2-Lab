@@ -27,7 +27,7 @@ public:
   void setPosicionEnemy(int fila, int columna);
 
   // Sobrecarga enemigo - puntos de danio
-  bool operator-(int puntos) const;
+  Enemy operator-(int puntos) const;
 
   void enemigo_en_ataque(int danio_torre); // Recibe el danio de una torre y actualiza la vida del enemigo
 
