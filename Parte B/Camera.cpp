@@ -64,16 +64,18 @@ void Camera::mostrar(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bo
                 dibujado = true;
             }
 
-            for (int k = 0; k < 6; k++) {
-                if (i == posiTorres[k][0] && j == posiTorres[k][1] && torresActiv[k]) {
-                    dibujado = true;
-                    cout << setw(4) << ("T" + to_string(k + 1));
-                    break;
-                }
-                else if (i == posiEnemies[k][0] && j == posiEnemies[k][1] && enemigosActiv[k]) {
-                    dibujado = true;
-                    cout << setw(4) << "E";
-                    break;
+            if (!dibujado) {
+                for (int k = 0; k < 6; k++) {
+                    if (i == posiTorres[k][0] && j == posiTorres[k][1] && torresActiv[k]) {
+                        dibujado = true;
+                        cout << setw(4) << ("T" + to_string(k + 1));
+                        break;
+                    }
+                    else if (i == posiEnemies[k][0] && j == posiEnemies[k][1] && enemigosActiv[k]) {
+                        dibujado = true;
+                        cout << setw(4) << "E";
+                        break;
+                    }
                 }
             }
 
