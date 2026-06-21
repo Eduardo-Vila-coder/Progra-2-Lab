@@ -2,106 +2,138 @@
 // Created by HP on 6/5/2026.
 //
 
+
 #include "Map.h"
 
 Map::Map() {
-tamanio_lado = 40;
-mapa = nullptr;
-inicializarMapa();
+    tamanio_lado = 40;
+    mapa = nullptr;
+
+    enemigos = nullptr;
+    torres = nullptr;
+
+    cantidad_enemigos = 0;
+    cantidad_torres = 0;
+
+    crearMapa();
+    crearCamino();
 }
 
 Map::Map(int tamanio_lado) {
-this->tamanio_lado = tamanio_lado;
-mapa = nullptr;
-inicializarMapa();
+    this->tamanio_lado = tamanio_lado;
+    mapa = nullptr;
+
+    enemigos = nullptr;
+    torres = nullptr;
+
+    cantidad_enemigos = 0;
+    cantidad_torres = 0;
+
+    crearMapa();
+    crearCamino();
 }
 
 Map::~Map() {
-eliminarMapa();
-}
+    for (int i = 0; i < tamanio_lado; i++) {
+        delete[] mapa[i];
+    }
 
-int Map::getTamanioLado() const {
-return tamanio_lado;
+    delete[] mapa;
+    mapa = nullptr;
+
+    // Solo eliminamos los arreglos de punteros.
+    // No eliminamos los objetos Enemy ni Tower porque Map tiene agregacion con ellos.
+    delete[] enemigos;
+    enemigos = nullptr;
+
+    delete[] torres;
+    torres = nullptr;
 }
 
 int** Map::getMapa() const {
-return mapa;
+    return mapa;
 }
 
-void Map::inicializarMapa() {
-// Creamos las filas del arreglo dinamico
-mapa = new int*[tamanio_lado];
+int Map::getTamanioLado() const {
+    return tamanio_lado;
+}
 
+void Map::crearMapa() {
+    mapa = new int*[tamanio_lado];
 
-for (int i = 0; i < tamanio_lado; i++) {
-    // Creamos las columnas de cada fila
-    mapa[i] = new int[tamanio_lado];
+    for (int i = 0; i < tamanio_lado; i++) {
+        mapa[i] = new int[tamanio_lado];
 
-    // Al inicio, todas las celdas son espacios vacios
-    for (int j = 0; j < tamanio_lado; j++) {
-        mapa[i][j] = 0;
+        for (int j = 0; j < tamanio_lado; j++) {
+            mapa[i][j] = 0;
+        }
     }
 }
 
-// Por ahora colocamos el inicio y la base.
-// Cuando tengan definido el camino final de 40 x 40,
-// aqui se agregaran las posiciones cuyo valor sera 1.
-mapa[0][0] = 2; // I: inicio
-mapa[tamanio_lado - 1][tamanio_lado - 1] = 3; // B: base
+void Map::crearCamino() {
+    // Inicio del camino
+    mapa[0][0] = 2;
 
+    // Primer tramo: fila 1, columnas 2 hasta 4
+    for (int j = 1; j <= 3; j++) {
+        mapa[0][j] = 1;
+    }
 
+    // Segundo tramo: columna 4, filas 2 hasta 9
+    for (int i = 1; i <= 8; i++) {
+        mapa[i][3] = 1;
+    }
+
+    // Tercer tramo: fila 9, columnas 5 hasta 25
+    for (int j = 4; j <= 24; j++) {
+        mapa[8][j] = 1;
+    }
+
+    // Cuarto tramo: columna 25, filas 10 hasta 18
+    for (int i = 9; i <= 17; i++) {
+        mapa[i][24] = 1;
+    }
+
+    // Quinto tramo: fila 18, columnas 24 hasta 5
+    for (int j = 23; j >= 4; j--) {
+        mapa[17][j] = 1;
+    }
+
+    // Sexto tramo: columna 5, filas 19 hasta 27
+    for (int i = 18; i <= 26; i++) {
+        mapa[i][4] = 1;
+    }
+
+    // Septimo tramo: fila 27, columnas 6 hasta 37
+    for (int j = 5; j <= 36; j++) {
+        mapa[26][j] = 1;
+    }
+
+    // Octavo tramo: columna 37, filas 28 hasta 40
+    for (int i = 27; i <= 39; i++) {
+        mapa[i][36] = 1;
+    }
+
+    // Ultimo tramo: fila 40, columnas 38 y 39
+    for (int j = 37; j <= 38; j++) {
+        mapa[39][j] = 1;
+    }
+
+    // Base en la fila 40, columna 40
+    mapa[39][39] = 3;
 }
 
-int Map::getCelda(int fila, int columna) const {
-// Si la posicion esta fuera del mapa, devolvemos -1
-if (fila < 0 || fila >= tamanio_lado || columna < 0 || columna >= tamanio_lado) {
-return -1;
+void Map::placeTower(int fila, int columna) {
 }
 
-
-return mapa[fila][columna];
-
-
+void Map::spawnEnemies() {
 }
 
-void Map::setCelda(int fila, int columna, int valor) {
-// Solo modificamos la celda si existe dentro del mapa
-if (fila >= 0 && fila < tamanio_lado && columna >= 0 && columna < tamanio_lado) {
-mapa[fila][columna] = valor;
-}
+void Map::moveEnemies() {
 }
 
-void Map::agregarEnemigo(Enemy* enemigo) {
-enemigos.push_back(enemigo);
+void Map::attackEnemies() {
 }
 
-void Map::agregarTorre(Tower* torre) {
-torres.push_back(torre);
-}
-
-vector<Enemy*>& Map::getEnemigos() {
-return enemigos;
-}
-
-vector<Tower*>& Map::getTorres() {
-return torres;
-}
-
-void Map::eliminarMapa() {
-// Si no existe mapa, no hay nada que eliminar
-if (mapa == nullptr) {
-return;
-}
-
-
-// Eliminamos cada fila creada con new[]
-for (int i = 0; i < tamanio_lado; i++) {
-    delete[] mapa[i];
-}
-
-// Eliminamos el arreglo que contenia las filas
-delete[] mapa;
-mapa = nullptr;
-
-
+void Map::verifyResult(bool& victoria, bool& derrota) {
 }
