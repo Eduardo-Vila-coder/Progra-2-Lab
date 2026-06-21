@@ -7,44 +7,37 @@
 
 #include "Enemy.h"
 #include "Tower.h"
-using namespace std;
 
 class Map {
 private:
+    int** mapa;
+    int tamanio_lado;
 
-int** mapa; // Es un arreglo dinamico que representa todo el tablero
-int tamanio_lado; // Representa el tamanio del mapa 40 x 40
-vector <Enemy*> enemigos; // Guarda punteros a los enemigos de la partida
-vector <Tower*> torres; // Guarda punteros a las torres de la partida 
+    // Utilizaremos arreglo dinamico de punteros
+    // Map va a agregar enemigos y torres pero no necesariamente va a ser quien los destruye
+    Enemy** enemigos;
+    Tower** torres;
+
+    int cantidad_enemigos;
+    int cantidad_torres;
 
 public:
-Map()
-Map(int tamanio_lado);
-~Map();
+    Map();
+    Map(int tamanio_lado);
+    ~Map();
 
-// Getters
-int getTamanioLado() const;
-int** getMapa() const;
+    int** getMapa() const;
+    int getTamanioLado() const;
 
-// El mapa se inicializa con espacios vacios, camino, inicio y base 
-void inicializarMapa();
+    void crearMapa();
+    void crearCamino();
 
-// Esto permite consultar o cambiar una celda del mapa
-int getCelda(int fila, int columna) const;
-void setCelda(int fila, int columna, int valor);
-
-// Agregacion: Map guarda punteros a objetos creados fuera de Map
-void agregarEnemigo(Enemy* enemigo);
-void agregarTorre(Tower* torre);
-
-// Devuelven los vectores para que Game pueda recorrer enemigos y torres
-vector<Enemy*>& getEnemigos();
-vector<Tower*>& getTorres();
-
-// Elimina el arreglo dinamico del mapa void eliminarMapa();
-void eliminarMapa();
-
+    // Estos metodos se completaran despues usando Enemy y Tower
+    void placeTower(int fila, int columna);
+    void spawnEnemies();
+    void moveEnemies();
+    void attackEnemies();
+    void verifyResult(bool& victoria, bool& derrota);
 };
-
 
 #endif //PARTE_B_MAP_H
