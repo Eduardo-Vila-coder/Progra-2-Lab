@@ -8,10 +8,10 @@
 
 class Enemy {
 private:
-  int salud;
-  bool activo;
-  int fila;
-  int columna;
+  int salud;   // Representa la vida del enemigo (Entre 0 y 5)
+  bool activo; // Representa el estado del enemigo: true si sigue vivo, false si fue eliminado
+  int fila;    // Representa la posicion del enemigo, en este caso, las filas
+  int columna; // Representa la posicion del enemigo, en este caso, las columnas 
 
 public:
   Enemy();
@@ -26,7 +26,11 @@ public:
   void setActivo(bool activo);
   void setPosicionEnemy(int fila, int columna);
 
-  bool operator==(const Enemy& otroEnemigo) const;
+  // Sobrecarga enemigo - puntos de danio
+  bool operator-(int puntos) const;
+
+  void enemigo_en_ataque(int danio_torre); // Recibe el danio de una torre y actualiza la vida del enemigo
+
 };
 
 
