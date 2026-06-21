@@ -6,134 +6,99 @@
 #include "Map.h"
 
 Map::Map() {
-    tamanio_lado = 40;
-    mapa = nullptr;
-
-    enemigos = nullptr;
-    torres = nullptr;
-
-    cantidad_enemigos = 0;
-    cantidad_torres = 0;
+    length_side = 40;
+    gameMap = nullptr;
 
     crearMapa();
     crearCamino();
 }
 
-Map::Map(int tamanio_lado) {
-    this->tamanio_lado = tamanio_lado;
-    mapa = nullptr;
-
-    enemigos = nullptr;
-    torres = nullptr;
-
-    cantidad_enemigos = 0;
-    cantidad_torres = 0;
+Map::Map(int length_side) {
+    this->length_side = length_side;
+    gameMap = nullptr;
 
     crearMapa();
     crearCamino();
 }
 
 Map::~Map() {
-    for (int i = 0; i < tamanio_lado; i++) {
-        delete[] mapa[i];
+    for (int i = 0; i < length_side; i++) {
+        delete[] gameMap[i];
     }
 
-    delete[] mapa;
-    mapa = nullptr;
-
-    // Solo eliminamos los arreglos de punteros.
-    // No eliminamos los objetos Enemy ni Tower porque Map tiene agregacion con ellos.
-    delete[] enemigos;
-    enemigos = nullptr;
-
-    delete[] torres;
-    torres = nullptr;
-}
-
-int** Map::getMapa() const {
-    return mapa;
-}
-
-int Map::getTamanioLado() const {
-    return tamanio_lado;
+    delete[] gameMap;
+    gameMap = nullptr;
 }
 
 void Map::crearMapa() {
-    mapa = new int*[tamanio_lado];
+    gameMap = new int*[length_side];
 
-    for (int i = 0; i < tamanio_lado; i++) {
-        mapa[i] = new int[tamanio_lado];
+    for (int i = 0; i < length_side; i++) {
+        gameMap[i] = new int[length_side];
 
-        for (int j = 0; j < tamanio_lado; j++) {
-            mapa[i][j] = 0;
+        for (int j = 0; j < length_side; j++) {
+            gameMap[i][j] = 0;
         }
     }
 }
 
 void Map::crearCamino() {
-    // Inicio del camino
-    mapa[0][0] = 2;
+    // Inicio: fila 2, columna 1
+    gameMap[1][0] = 2;
 
-    // Primer tramo: fila 1, columnas 2 hasta 4
-    for (int j = 1; j <= 3; j++) {
-        mapa[0][j] = 1;
+    // Fila 2: desde columna 1 hasta columna 4
+    for (int j = 0; j <= 3; j++) {
+        gameMap[1][j] = 1;
     }
 
-    // Segundo tramo: columna 4, filas 2 hasta 9
+    // Columna 4: desde fila 2 hasta fila 9
     for (int i = 1; i <= 8; i++) {
-        mapa[i][3] = 1;
+        gameMap[i][3] = 1;
     }
 
-    // Tercer tramo: fila 9, columnas 5 hasta 25
+    // Fila 9: desde columna 4 hasta columna 25
+    for (int j = 3; j <= 24; j++) {
+        gameMap[8][j] = 1;
+    }
+
+    // Columna 25: desde fila 9 hasta fila 18
+    for (int i = 8; i <= 17; i++) {
+        gameMap[i][24] = 1;
+    }
+
+    // Fila 18: desde columna 25 hasta columna 5
     for (int j = 4; j <= 24; j++) {
-        mapa[8][j] = 1;
+        gameMap[17][j] = 1;
     }
 
-    // Cuarto tramo: columna 25, filas 10 hasta 18
-    for (int i = 9; i <= 17; i++) {
-        mapa[i][24] = 1;
+    // Columna 5: desde fila 18 hasta fila 27
+    for (int i = 17; i <= 26; i++) {
+        gameMap[i][4] = 1;
     }
 
-    // Quinto tramo: fila 18, columnas 24 hasta 5
-    for (int j = 23; j >= 4; j--) {
-        mapa[17][j] = 1;
+    // Fila 27: desde columna 5 hasta columna 37
+    for (int j = 4; j <= 36; j++) {
+        gameMap[26][j] = 1;
     }
 
-    // Sexto tramo: columna 5, filas 19 hasta 27
-    for (int i = 18; i <= 26; i++) {
-        mapa[i][4] = 1;
+    // Columna 37: desde fila 27 hasta fila 40
+    for (int i = 26; i <= 39; i++) {
+        gameMap[i][36] = 1;
     }
 
-    // Septimo tramo: fila 27, columnas 6 hasta 37
-    for (int j = 5; j <= 36; j++) {
-        mapa[26][j] = 1;
+    // Fila 40: desde columna 37 hasta columna 40
+    for (int j = 36; j <= 39; j++) {
+        gameMap[39][j] = 1;
     }
 
-    // Octavo tramo: columna 37, filas 28 hasta 40
-    for (int i = 27; i <= 39; i++) {
-        mapa[i][36] = 1;
-    }
-
-    // Ultimo tramo: fila 40, columnas 38 y 39
-    for (int j = 37; j <= 38; j++) {
-        mapa[39][j] = 1;
-    }
-
-    // Base en la fila 40, columna 40
-    mapa[39][39] = 3;
+    // Base: fila 40, columna 40
+    gameMap[39][39] = 3;
 }
 
-void Map::placeTower(int fila, int columna) {
+int** Map::getGameMap() const {
+    return gameMap;
 }
 
-void Map::spawnEnemies() {
-}
-
-void Map::moveEnemies() {
-}
-
-void Map::attackEnemies() {
-}
-
-void Map::verifyResult(bool& victoria, bool& derrota) {
+int Map::getLengthSide() const {
+    return length_side;
 }
