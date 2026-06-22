@@ -63,3 +63,11 @@ void Tower:: newShots() {
 void Tower :: operator-(int disp) {
     shots -= disp;
 };
+
+int Tower::getFilaRango(int posicion) {
+    return attackRange[posicion][0];
+}
+
+int Tower::getColumnaRango(int posicion) {
+    return attackRange[posicion][1];
+}
