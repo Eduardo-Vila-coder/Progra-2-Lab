@@ -24,6 +24,12 @@ public:
 
     int** getGameMap() const;
     int getLengthSide() const;
+
+    void placeTower(int fila, int columna, int danio, int disparos);
+    void spawnEnemies();
+    void moveEnemies();
+    void attackEnemies();
+    void verifyResult(bool& victory, bool& defeat);
 };
 
 #endif //PARTE_B_MAP_H
