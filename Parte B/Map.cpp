@@ -265,7 +265,7 @@ void Map::verifyResult(bool& victory, bool& defeat) {
     }
 
     // Se gana unicamente cuando hubo enemigos y todos estos enemigos fueron eliminados
-    if (quedaEnemigosVivos == false) {
+    if (quedaEnemigoVivo == false) {
         victory = true;
     }
 }
