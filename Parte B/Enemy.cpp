@@ -51,7 +51,7 @@ void Enemy::setPosicionEnemy(int fila, int columna) {
 }
 
 // En esta parte, esta la sobrecarga del operador, que permite restar puntos de salud a un enemigo usando el operador -
-Enemy Enemy::operator-(int puntos) const {
+void Enemy::operator-=(int puntos) const {
   Enemy enemigo_resultado = *this;
 
   if (puntos >= enemigo_resultado.salud){  // Si el daño es mayor o igual a la salud que tiene el enemigo, la salud quedaria en cero
