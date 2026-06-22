@@ -3,7 +3,6 @@
 Map::Map() {
     length_side = 40;
     gameMap = nullptr;
-
     crearMapa();
     crearCamino();
 }
@@ -11,18 +10,19 @@ Map::Map() {
 Map::Map(int length_side) {
     this->length_side = length_side;
     gameMap = nullptr;
-
     crearMapa();
     crearCamino();
 }
 
 Map::~Map() {
-    for (int i = 0; i < length_side; i++) {
-        delete[] gameMap[i];
-    }
+    if (gameMap != nullptr) {
+        for (int i = 0; i < length_side; i++) {
+            delete[] gameMap[i];
+        }
 
-    delete[] gameMap;
-    gameMap = nullptr;
+        delete[] gameMap;
+        gameMap = nullptr;
+    }
 }
 
 void Map::crearMapa() {
@@ -96,4 +96,26 @@ int** Map::getGameMap() const {
 
 int Map::getLengthSide() const {
     return length_side;
+}
+
+void Map::placeTower(int fila, int columna, int danio, int disparos) {
+    Tower* nuevaTorre = new Tower(fila, columna, danio, disparos);
+    torres.push_back(nuevaTorre);
+}
+
+void Map::spawnEnemies() {
+    // El enemigo aparece al inicio del camino
+    Enemy* nuevoEnemigo = new Enemy(5, 1, 0);
+    enemigos.push_back(nuevoEnemigo);
+}
+
+void Map::moveEnemies() {
+}
+
+void Map::attackEnemies() {
+}
+
+void Map::verifyResult(bool& victory, bool& defeat) {
+    victory = false;
+    defeat = false;
 }
