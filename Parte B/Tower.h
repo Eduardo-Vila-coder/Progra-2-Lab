@@ -26,6 +26,8 @@ private:
     int getDamage();
     bool getTowersActivate();
     int getShots();
+	int getFilaRango(int posicion);
+	int getColumnaRango(int posicion);
 
     void setTowersActivate(bool towersActivate);
     void setShots(int shots);
