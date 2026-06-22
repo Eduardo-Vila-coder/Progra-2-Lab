@@ -1,8 +1,3 @@
-//
-// Created by HP on 6/5/2026.
-//
-
-
 #include "Map.h"
 
 Map::Map() {
@@ -43,13 +38,13 @@ void Map::crearMapa() {
 }
 
 void Map::crearCamino() {
+    // Inicioo: fila 1, columna 1
+    gameMap[0][0] = 2;
+
     // Fila 2: desde columna 1 hasta columna 4
     for (int j = 0; j <= 3; j++) {
         gameMap[1][j] = 1;
     }
-
-    // Inicioo: fila 2, columna 1
-    gameMap[1][0] = 2;
 
     // Columna 4: desde fila 2 hasta fila 9
     for (int i = 1; i <= 8; i++) {

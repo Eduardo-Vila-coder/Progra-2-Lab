@@ -1,7 +1,3 @@
-//
-// Created by HP on 6/5/2026.
-//
-
 #ifndef PARTE_B_ENEMY_H
 #define PARTE_B_ENEMY_H
 
@@ -10,8 +6,8 @@ class Enemy {
 private:
   int salud;   // Representa la vida del enemigo (Inicialmente entre 1 y 5. Puede llegar a 0 cuando el enemigo es eliminado) 
   bool activo; // Representa el estado del enemigo: true si sigue vivo, false si fue eliminado
-  int fila;    // Representa la posicion del enemigo, en este caso, las filas
-  int columna; // Representa la posicion del enemigo, en este caso, las columnas 
+  int fila;    // Representa la posicion del enemigo, en este caso, la fila
+  int columna; // Representa la posicion del enemigo, en este caso, la columna
 
 public:
   Enemy();
