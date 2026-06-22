@@ -241,22 +241,31 @@ void Map::attackEnemies() {
 }
 
 void Map::verifyResult(bool& victory, bool& defeat) {
-    victory = true;
+    victory = false;
     defeat = false;
 
-    for (int i = 0; i < enemigos.size(); i++) {
-        // Si queda un enemigo vivo, todavia no se gana
-        if (enemigos[i]->getActivo()) {
-            victory = false;
-        }
+    // Si aun no existen enemigos, entonces todavia no se puede ganar
+    if (enemigos.empty()){
+        return;
+    }
 
+    bool quedaEnemigoVivo = false;
+
+    for (int i = 0; i < enemigos.size(); i++){
         // Si un enemigo vivo llega a la base, entonces se pierde
-        if (enemigos[i]->getActivo() &&
-            enemigos[i]->getFila() == 39 &&
-            enemigos[i]->getColumna() == 39) {
-
+        if (enemigos[i]->getActivo() && enemigos[i]->getFila() == 39 && enemigos[i]->getColumna() == 39) {
             defeat = true;
-            victory = false;
+            return;
         }
+
+        // Si queda un enemigo vivo, entonces todavia no se gana
+        if (enemigos[i]->getActivo()){
+            quedaEnemigoVivo = true;
+        }     
+    }
+
+    // Se gana unicamente cuando hubo enemigos y todos estos enemigos fueron eliminados
+    if (quedaEnemigosVivos == false) {
+        victory = true;
     }
 }
