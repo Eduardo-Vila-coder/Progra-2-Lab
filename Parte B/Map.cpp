@@ -15,6 +15,14 @@ Map::Map(int length_side) {
 }
 
 Map::~Map() {
+    for (int i = 0; i < enemigos.size(); i++) {
+        delete enemigos[i];
+    }
+
+    for (int i = 0; i < torres.size(); i++) {
+        delete torres[i];
+    }
+
     if (gameMap != nullptr) {
         for (int i = 0; i < length_side; i++) {
             delete[] gameMap[i];
