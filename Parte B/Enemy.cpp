@@ -50,7 +50,7 @@ void Enemy::setPosicionEnemy(int fila, int columna) {
   this->columna = columna;
 }
 
-// En esta parte, esta la sobrecarga del operador, que permite restar puntos de salud a un enemigo usando el operador -
+// En esta parte, esta la sobrecarga del operador, que permite restar puntos de salud a un enemigo usando el operador -=
 void Enemy::operator-=(int puntos) {
   if (puntos >= salud) {
     salud = 0;
