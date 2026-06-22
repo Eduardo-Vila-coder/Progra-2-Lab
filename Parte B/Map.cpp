@@ -222,7 +222,7 @@ void Map::attackEnemies() {
 
             // Chequeamos si el enemigo esta dentro de uno de los 12 puntos del rango
             for (int rango = 0; rango < 12; rango++) {
-                if (diferenciaFila == torres[i]->getFilaRango(rango) &% diferenciaColumna == torres[i]->getColumnaRango(rango)) {
+                if (diferenciaFila == torres[i]->getFilaRango(rango) && diferenciaColumna == torres[i]->getColumnaRango(rango)) {
                     
                     enemigos[j]->enemigo_en_ataque(torres[i]->getDamage());
                     torres[i]->newShots();
