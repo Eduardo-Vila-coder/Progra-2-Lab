@@ -69,7 +69,26 @@ int main() {
         } else if (command == "exit") {
             cout << "El juego ha finalizado" << endl;
             break;
-        } else {
+        }else if (command == "help")
+        {
+            cout << "Comandos disponibles:" << endl;
+            cout << "init : Inicia un juego nuevo con 300 de dinero" << endl;
+            cout << "map : Muestra la ventana del mapa" << endl;
+            cout << "up : Mueve la camara arriba n posiciones" << endl;
+            cout << "down: Mueve la camara abajo n posiciones" << endl;
+            cout << "left : Mueve la camara a la izquierda n posiciones" << endl;
+            cout << "right : Mueve la camara a la derecha n posiciones" << endl;
+            cout << "place x y : Coloca una torre en fila x, columna y (cuesta 100)" << endl;
+            cout << "wave : Genera 6 enemigos en el inicio del camino" << endl;
+            cout << "next : Avanza un turno: enemigos se mueven y torres atacan" << endl;
+            cout << "status : Muestra dinero, cantidad de torres y enemigos vivos" << endl;
+            cout << "save : Guarda la partida en savegame.txt" << endl;
+
+            cout << "load : Carga la partida desde savegame.txt" << endl;
+            cout << "exit : Cierra el juego" << endl;
+
+        }
+        else {
             cout << "Comando no reconocido" << endl;
         }
     } while (!game->isVictory() && !game->isDefeat());
