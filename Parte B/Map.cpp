@@ -241,9 +241,6 @@ void Map::attackEnemies() {
 }
 
 void Map::verifyResult(bool& victory, bool& defeat) {
-    victory = false;
-    defeat = false;
-
     // Si aun no existen enemigos, entonces todavia no se puede ganar
     if (enemigos.empty()){
         return;
