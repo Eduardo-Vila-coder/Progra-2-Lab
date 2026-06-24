@@ -119,76 +119,92 @@ int Map::getLengthSide() const {
 }
 
 void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero) {
-    // Como el usuario ve el mapa desde fila 1 y columna 1,
-    // se resta 1 para usar los índices del arreglo.
+    int costoTorre = 10;
+    // El usuario escribe filas y columnas desde 1 hasta 40, entonces restamos 1 porque arreglo usa indices desde 0 hasta 39.
     fila = fila - 1;
     columna = columna - 1;
 
-    // Verificamos que la posición exista dentro del mapa
     if (fila < 0 || fila >= length_side || columna < 0 || columna >= length_side) {
-        cout << "Error: la posicion esta fuera del mapa." << endl;
+        cout << "Error: la posicion ingresada esta fuera del mapa" << endl;
         return;
     }
 
-    // Verificamos que el daño sea válido
     if (danio < 1 || danio > 5) {
-        cout << "Error: el dano debe estar entre 1 y 5." << endl;
+        cout << "Error: el danio debe estar entre 1 y 5" << endl;
         return;
     }
 
-    // Verificamos que tenga disparos
     if (disparos <= 0) {
-        cout << "Error: la torre debe tener disparos." << endl;
+        cout << "Error: la torre debe tener al menos un disparo" << endl;
         return;
     }
 
-    // Una torre cuesta 10
-    if (dinero < 10) {
-        cout << "Error: no tienes dinero suficiente." << endl;
+    if (dinero < costoTorre) {
+        cout << "Error: no tienes dinero suficiente para colocar una torre" << endl;
         return;
     }
 
-    // La torre solo puede ir en una casilla vacía
     if (gameMap[fila][columna] != 0) {
-        cout << "Error: no puedes colocar una torre en esa posicion." << endl;
+        cout << "Error: esa posicion no esta disponible" << endl;
         return;
     }
 
-    // Revisamos si está al lado de una parte del camino
-    bool cercaCamino = false;
+    bool posicionPermitida = false;
 
-    if (fila > 0 && gameMap[fila - 1][columna] == 1) {
-        cercaCamino = true;
+    // Primer tramo
+    if (fila == 2 && columna >= 0 && columna <= 2) {
+        posicionPermitida = true;
     }
 
-    if (fila < length_side - 1 && gameMap[fila + 1][columna] == 1) {
-        cercaCamino = true;
+    // Segundo tramo
+    if (columna == 2 && fila >= 3 && fila <= 8) {
+        posicionPermitida = true;
     }
 
-    if (columna > 0 && gameMap[fila][columna - 1] == 1) {
-        cercaCamino = true;
+    // Tercer tramo
+    if (fila == 9 && columna >= 2 && columna <= 23){
+        posicionPermitida = true;
     }
 
-    if (columna < length_side - 1 && gameMap[fila][columna + 1] == 1) {
-        cercaCamino = true;
+    // Cuarto tramo
+    if (columna == 23 && fila >= 10 && fila <= 16){
+        posicionPermitida = true;
     }
 
-    if (cercaCamino == false) {
-        cout << "Error: la torre debe estar al lado del camino." << endl;
+    // Quinto tramo
+    if (fila == 16 && columna >= 3 && columna <= 22) {
+        posicionPermitida = true;
+    }
+
+    // Sexto tramo
+    if (columna == 3 && fila >= 17 && fila <= 27){
+        posicionPermitida = true;
+    }
+
+    // Septimo tramo
+    if (fila == 27 && columna >= 4 && columna <= 35){
+        posicionPermitida = true;
+    }
+
+    // Octavo tramo
+    if (columna == 35 && fila >= 28 && fila <= 39){
+        posicionPermitida = true;
+    }
+
+    if (posicionPermitida == false) {
+        cout << "Error: la torre debe colocarse en una zona permitida" << endl;
         return;
     }
 
     Tower* nuevaTorre = new Tower(fila, columna, danio, disparos);
+
     torres.push_back(nuevaTorre);
 
-    // 4 representa una torre dentro del mapa
     gameMap[fila][columna] = 4;
 
-    dinero = dinero - 10;
+    dinero = dinero - costoTorre;
 
-    cout << "Torre colocada en fila " << fila + 1
-         << ", columna " << columna + 1 << endl;
-
+    cout << "Torre colocada en fila " << fila + 1 << ", columna " << columna + 1 << endl;
     cout << "Dinero actual: " << dinero << endl;
 }
 
