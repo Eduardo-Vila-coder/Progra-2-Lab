@@ -1,6 +1,8 @@
 #ifndef PARTE_B_MAP_H
 #define PARTE_B_MAP_H
 #include <vector>
+#include <cstdlib>
+#include<ctime>
 #include "Enemy.h"
 #include "Tower.h"
 using namespace std;

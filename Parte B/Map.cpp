@@ -122,7 +122,7 @@ int Map::getLengthSide() const {
 }
 
 void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero) {
-    int costoTorre = 10;
+    int costoTorre = 100;
     // El usuario escribe filas y columnas desde 1 hasta 40, entonces restamos 1 porque arreglo usa indices desde 0 hasta 39.
     fila = fila - 1;
     columna = columna - 1;
@@ -212,10 +212,11 @@ void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero
 }
 
 void Map::spawnEnemies() {
+    srand(time(nullptr));
     int cantidadEnemigos = rand() % 5 + 1;
 
     for (int i = 0; i < cantidadEnemigos; i++) {
-        int vidaEnemigo = rand() % 5 + 1;
+        int vidaEnemigo = 1;
 
         Enemy* nuevoEnemigo = new Enemy(vidaEnemigo, 0, 1);
 
@@ -239,7 +240,7 @@ void Map::moveEnemies() {
             enemigos[i]->setPosicionEnemy(fila, columna + 1);
         }
 
-        // Tramo 2: columna 4, desde fila 1 hasta fila 7
+        // Tramo 2: columna 4, desde fila 0 hasta fila 7
         else if (columna == 4 && fila < 7) {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
@@ -286,59 +287,62 @@ void Map::moveEnemies() {
         // Último movimiento hacia la base
         else if (fila == 38 && columna == 39) {
             enemigos[i]->setPosicionEnemy(39, 39);
+            gameMap[19][19] = 0;
         }
     }
 
-    gameMap[19][19] = 0;
 
-    for (int i = 0; i < enemigos.size() - 1; i++) {
-        for (int j = 0; j < enemigos.size() - 1 - i; j++) {
-            int filaActual = enemigos[j]->getFila();
-            int columnaActual = enemigos[j]->getColumna();
-
-            int filaSiguiente = enemigos[j + 1]->getFila();
-            int columnaSiguiente = enemigos[j + 1]->getColumna();
-
-            bool cambiar = false;
-
-            // Si esta en una fila mas abajo, ya avanzo mas
-            if (filaSiguiente > filaActual) {
-                cambiar = true;
-            }
-
-            // Si estan en la misma fila, revisamos hacia donde va ese tramo
-            else if (filaSiguiente == filaActual) {
-                // En estos tramos se avanza hacia la derecha
-                if ((filaActual == 0 || filaActual == 7 || filaActual == 25 || filaActual == 38) && columnaSiguiente > columnaActual) {
-                    cambiar = true;
-                }
-
-                // En la fila 18 se avanza hacia la izquierda
-                if (filaActual == 18 && columnaSiguiente < columnaActual) {
-                    cambiar = true;
-                }
-            }
-
-            if (cambiar == true) {
-                Enemy* auxiliar = enemigos[j];
-                enemigos[j] = enemigos[j + 1];
-                enemigos[j + 1] = auxiliar;
-            }
-        }
-    }
+    // for (int i = 0; i < enemigos.size() - 1; i++) {
+    //     for (int j = 0; j < enemigos.size() - 1 - i; j++) {
+    //         int filaActual = enemigos[j]->getFila();
+    //         int columnaActual = enemigos[j]->getColumna();
+    //
+    //         int filaSiguiente = enemigos[j + 1]->getFila();
+    //         int columnaSiguiente = enemigos[j + 1]->getColumna();
+    //
+    //         bool cambiar = false;
+    //
+    //         // Si esta en una fila mas abajo, ya avanzo mas
+    //         if (filaSiguiente > filaActual) {
+    //             cambiar = true;
+    //         }
+    //
+    //         // Si estan en la misma fila, revisamos hacia donde va ese tramo
+    //         else if (filaSiguiente == filaActual) {
+    //             // En estos tramos se avanza hacia la derecha
+    //             if ((filaActual == 0 || filaActual == 7 || filaActual == 25 || filaActual == 38) && columnaSiguiente > columnaActual) {
+    //                 cambiar = true;
+    //             }
+    //
+    //             // En la fila 18 se avanza hacia la izquierda
+    //             if (filaActual == 18 && columnaSiguiente < columnaActual) {
+    //                 cambiar = true;
+    //             }
+    //         }
+    //
+    //         if (cambiar == true) {
+    //             Enemy* auxiliar = enemigos[j];
+    //             enemigos[j] = enemigos[j + 1];
+    //             enemigos[j + 1] = auxiliar;
+    //         }
+    //     }
+    // }
 
     
     cout << "Los enemigos avanzaron una posicion" << endl;
 }
 
 void Map::attackEnemies(int& dinero) {
-    int recompensa = 5;
+    int recompensa = 50;
+    bool torre_ataco = false;
+    bool hubo_ataque = false;
 
     for (int i = 0; i < torres.size(); i++) {
         if (torres[i]->getTowersActivate() == false) {
             continue;
         }
 
+        torre_ataco = false;
         for (int j = 0; j < enemigos.size(); j++) {
             if (enemigos[j]->getActivo() == false) {
                 continue;
@@ -353,6 +357,8 @@ void Map::attackEnemies(int& dinero) {
 
                     enemigos[j]->enemigo_en_ataque(torres[i]->getDamage());
                     torres[i]->newShots();
+                    torre_ataco = true;
+                    hubo_ataque = true;
 
                     if (enemigos[j]->getActivo() == false) {
                         dinero = dinero + recompensa;
@@ -361,10 +367,16 @@ void Map::attackEnemies(int& dinero) {
                     break;
                 }
             }
+
+            if (torre_ataco) {
+                break;
+            }
         }
     }
 
-    cout << "Las torres atacaron a los enemigos" << endl;
+    if (hubo_ataque) {
+        cout << "Las torres atacaron a los enemigos" << endl;
+    }
 }
 
  
@@ -391,7 +403,6 @@ void Map::verifyResult(bool& victory, bool& defeat) {
             quedaEnemigoVivo = true;
         }
     }
-    
 
     if (quedaEnemigoVivo == false) {
         victory = true;
