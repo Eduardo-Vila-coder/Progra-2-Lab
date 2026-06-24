@@ -274,9 +274,13 @@ void Map::moveEnemies() {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
-        // Tramo 9: fila 38, de columna 38 hasta columna 39
-        else if (fila == 38 && columna < 39) {
-            enemigos[i]->setPosicionEnemy(fila, columna + 1);
+        // Tramo 9: 
+        else if (fila == 38 && columna == 37) {
+            enemigos[i]->setPosicionEnemy(38,38);
+        }
+
+        else if (fila == 38 && columna == 38) {
+            enemigos[i]->setPosicionEnemy(38, 39);
         }
 
         // Último movimiento hacia la base
@@ -286,6 +290,42 @@ void Map::moveEnemies() {
     }
 
     gameMap[19][19] = 0;
+
+    for (int i = 0; i < enemigos.size() - 1; i++) {
+        for (int j = 0; j < enemigos.size() - 1 - i; j++) {
+            int filaActual = enemigos[j]->getFila();
+            int columnaActual = enemigos[j]->getColumna();
+
+            int filaSiguiente = enemigos[j + 1]->getFila();
+            int columnaSiguiente = enemigos[j + 1]->getColumna();
+
+            bool cambiar = false;
+
+            // Si esta en una fila mas abajo, ya avanzo mas
+            if (filaSiguiente > filaActual) {
+                cambiar = true;
+            }
+
+            // Si estan en la misma fila, revisamos hacia donde va ese tramo
+            else if (filaSiguiente == filaActual) {
+                // En estos tramos se avanza hacia la derecha
+                if ((filaActual == 0 || filaActual == 7 || filaActual == 25 || filaActual == 38) && columnaSiguiente > columnaActual) {
+                    cambiar = true;
+                }
+
+                // En la fila 18 se avanza hacia la izquierda
+                if (filaActual == 18 && columnaSiguiente < columnaActual) {
+                    cambiar = true;
+                }
+            }
+
+            if (cambiar == true) {
+                Enemy* auxiliar = enemigos[j];
+                enemigos[j] = enemigos[j + 1];
+                enemigos[j + 1] = auxiliar;
+            }
+        }
+    }
 
     
     cout << "Los enemigos avanzaron una posicion" << endl;
