@@ -217,7 +217,7 @@ void Map::spawnEnemies() {
     for (int i = 0; i < cantidadEnemigos; i++) {
         int vidaEnemigo = rand() % 5 + 1;
 
-        Enemy* nuevoEnemigo = new Enemy(vidaEnemigo, 0, 0);
+        Enemy* nuevoEnemigo = new Enemy(vidaEnemigo, 0, 1);
 
         enemigos.push_back(nuevoEnemigo);
     }
@@ -234,8 +234,8 @@ void Map::moveEnemies() {
         int fila = enemigos[i]->getFila();
         int columna = enemigos[i]->getColumna();
 
-        // Tramo 1: fila 0, desde columna 0 hasta columna 4
-        if (fila == 0 && columna < 4) {
+        // Tramo 1: fila 0, desde columna 1 hasta columna 4
+        if (fila == 0 && columna >= 1 && columna < 4) {
             enemigos[i]->setPosicionEnemy(fila, columna + 1);
         }
 
