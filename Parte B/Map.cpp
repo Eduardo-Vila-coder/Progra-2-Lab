@@ -225,6 +225,8 @@ void Map::spawnEnemies() {
     cout << cantidadEnemigos << " enemigos aparecieron en el punto de inicio." << endl;
 }
 
+
+
 void Map::attackEnemies() {
     for (int i = 0; i < torres.size(); i++) {
         // Ignoramos las torres sin disparos o desactivadas
