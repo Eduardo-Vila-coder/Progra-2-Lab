@@ -303,37 +303,36 @@ void Map::attackEnemies() {
                     break;
                 }
             }
-
-            // Si la torre ya no tiene disparos, dejamos de buscar enemigos
-            if (torres[i]->getTowersActivate() == false) {
-                break;
-            }
         }
     }
 }
 
+ 
 void Map::verifyResult(bool& victory, bool& defeat) {
-    // Si aun no existen enemigos, entonces todavia no se puede ganar
-    if (enemigos.empty()){
+    victory = false;
+    defeat = false;
+
+    if (enemigos.empty()) {
         return;
     }
 
     bool quedaEnemigoVivo = false;
 
-    for (int i = 0; i < enemigos.size(); i++){
-        // Si un enemigo vivo llega a la base, entonces se pierde
-        if (enemigos[i]->getActivo() && enemigos[i]->getFila() == 39 && enemigos[i]->getColumna() == 39) {
+    for (int i = 0; i < enemigos.size(); i++) {
+        if (enemigos[i]->getActivo() &&
+            enemigos[i]->getFila() == 39 &&
+            enemigos[i]->getColumna() == 39) {
+
             defeat = true;
             return;
         }
 
-        // Si queda un enemigo vivo, entonces todavia no se gana
-        if (enemigos[i]->getActivo()){
+        if (enemigos[i]->getActivo()) {
             quedaEnemigoVivo = true;
-        }     
+        }
     }
+    
 
-    // Se gana unicamente cuando hubo enemigos y todos estos enemigos fueron eliminados
     if (quedaEnemigoVivo == false) {
         victory = true;
     }
