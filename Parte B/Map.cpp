@@ -331,15 +331,15 @@ void Map::moveEnemies() {
     cout << "Los enemigos avanzaron una posicion" << endl;
 }
 
-void Map::attackEnemies() {
+void Map::attackEnemies(int& dinero) {
+    int recompensa = 5;
+
     for (int i = 0; i < torres.size(); i++) {
-        // Ignoramos las torres sin disparos o desactivadas
         if (torres[i]->getTowersActivate() == false) {
             continue;
         }
 
         for (int j = 0; j < enemigos.size(); j++) {
-            // Ignoramos a los enemigos ya estan eliminados
             if (enemigos[j]->getActivo() == false) {
                 continue;
             }
@@ -347,19 +347,24 @@ void Map::attackEnemies() {
             int diferenciaFila = enemigos[j]->getFila() - torres[i]->getRow();
             int diferenciaColumna = enemigos[j]->getColumna() - torres[i]->getCol();
 
-            // Chequeamos si el enemigo esta dentro de uno de los 12 puntos del rango
             for (int rango = 0; rango < 12; rango++) {
-                if (diferenciaFila == torres[i]->getFilaRango(rango) && diferenciaColumna == torres[i]->getColumnaRango(rango)) {
-                    
+                if (diferenciaFila == torres[i]->getFilaRango(rango) &&
+                    diferenciaColumna == torres[i]->getColumnaRango(rango)) {
+
                     enemigos[j]->enemigo_en_ataque(torres[i]->getDamage());
                     torres[i]->newShots();
 
-                    // Debemos recordar que una torre dispara solo una vez por turno
+                    if (enemigos[j]->getActivo() == false) {
+                        dinero = dinero + recompensa;
+                    }
+
                     break;
                 }
             }
         }
     }
+
+    cout << "Las torres atacaron a los enemigos" << endl;
 }
 
  
