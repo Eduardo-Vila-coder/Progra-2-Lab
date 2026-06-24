@@ -26,7 +26,7 @@ public:
     int** getGameMap() const;
     int getLengthSide() const;
 
-    void placeTower(int fila, int columna, int danio, int disparos);
+    void placeTower(int fila, int columna, int danio, int disparos, int& dinero);
     void spawnEnemies();
     void moveEnemies();
     void attackEnemies();
