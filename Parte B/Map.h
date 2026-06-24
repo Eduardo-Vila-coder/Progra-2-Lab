@@ -29,7 +29,7 @@ public:
     void placeTower(int fila, int columna, int danio, int disparos, int& dinero);
     void spawnEnemies();
     void moveEnemies();
-    void attackEnemies();
+    void attackEnemies(int &dinero);
     void verifyResult(bool& victory, bool& defeat);
 };
 
