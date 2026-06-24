@@ -1,6 +1,9 @@
 #include "Map.h"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
+
 
 Map::Map() {
     length_side = 40;
@@ -209,71 +212,17 @@ void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero
 }
 
 void Map::spawnEnemies() {
-    // El enemigo aparece en el inicio del camino es decir en la fila 1, columna 1
-    Enemy* nuevoEnemigo = new Enemy(5, 0, 0);
-    enemigos.push_back(nuevoEnemigo);
-}
+    int cantidadEnemigos = rand() % 5 + 1;
 
-void Map::moveEnemies() {
-    for (int i = 0; i < enemigos.size(); i++) {
-        // Ignoramos a los enemigos eliminados
-        if (enemigos[i]->getActivo() == false) {
-            continue;
-        }
+    for (int i = 0; i < cantidadEnemigos; i++) {
+        int vidaEnemigo = rand() % 5 + 1;
 
-        int fila = enemigos[i]->getFila();
-        int columna = enemigos[i]->getColumna();
+        Enemy* nuevoEnemigo = new Enemy(vidaEnemigo, 0, 0);
 
-        // Inicio: fila 1, columna 1 y luego baja a la fila 2
-        if (fila == 0 && columna == 0) {
-            enemigos[i]->setPosicionEnemy(1, 0);
-        }
-
-        // Fila 2: avanza hacia la derecha hasta la columna 4
-        else if (fila == 1 && columna < 3) {
-            enemigos[i]->setPosicionEnemy(fila, columna + 1);
-        }
-
-        // Columna 4: baja hasta la fila 9
-        else if (columna == 3 && fila < 8) {
-            enemigos[i]->setPosicionEnemy(fila + 1, columna);
-        }
-
-        // Fila 9: avanza hacia la derecha hasta la columna 25
-        else if (fila == 8 && columna < 24) {
-            enemigos[i]->setPosicionEnemy(fila, columna + 1);
-        }
-
-        // Columna 25: baja hasta la fila 18
-        else if (columna == 24 && fila < 17) {
-            enemigos[i]->setPosicionEnemy(fila + 1, columna);
-        }
-
-        // Fila 18: avanza hacia la izquierda hasta la columna 5
-        else if (fila == 17 && columna > 4) {
-            enemigos[i]->setPosicionEnemy(fila, columna - 1);
-        }
-
-        // Columna 5: baja hasta la fila 27
-        else if (columna == 4 && fila < 26) {
-            enemigos[i]->setPosicionEnemy(fila + 1, columna);
-        }
-
-        // Fila 27: avanza hacia la derecha hasta la columna 37
-        else if (fila == 26 && columna < 36) {
-            enemigos[i]->setPosicionEnemy(fila, columna + 1);
-        }
-
-        // Columna 37: baja hasta la fila 40
-        else if (columna == 36 && fila < 39) {
-            enemigos[i]->setPosicionEnemy(fila + 1, columna);
-        }
-
-        // Fila 40: avanza hacia la derecha hasta la base
-        else if (fila == 39 && columna < 39) {
-            enemigos[i]->setPosicionEnemy(fila, columna + 1);
-        }
+        enemigos.push_back(nuevoEnemigo);
     }
+
+    cout << cantidadEnemigos << " enemigos aparecieron en el punto de inicio." << endl;
 }
 
 void Map::attackEnemies() {
