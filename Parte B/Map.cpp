@@ -222,10 +222,74 @@ void Map::spawnEnemies() {
         enemigos.push_back(nuevoEnemigo);
     }
 
-    cout << cantidadEnemigos << " enemigos aparecieron en el punto de inicio." << endl;
+    cout << cantidadEnemigos << " enemigos aparecieron en el punto de inicio" << endl;
 }
 
+void Map::moveEnemies() {
+    for (int i = 0; i < enemigos.size(); i++) {
+        if (enemigos[i]->getActivo() == false) {
+            continue;
+        }
 
+        int fila = enemigos[i]->getFila();
+        int columna = enemigos[i]->getColumna();
+
+        // Tramo 1: fila 0, desde columna 0 hasta columna 4
+        if (fila == 0 && columna < 4) {
+            enemigos[i]->setPosicionEnemy(fila, columna + 1);
+        }
+
+        // Tramo 2: columna 4, desde fila 1 hasta fila 7
+        else if (columna == 4 && fila < 7) {
+            enemigos[i]->setPosicionEnemy(fila + 1, columna);
+        }
+
+        // Tramo 3: fila 7, desde columna 5 hasta columna 25
+        else if (fila == 7 && columna < 25) {
+            enemigos[i]->setPosicionEnemy(fila, columna + 1);
+        }
+
+        // Tramo 4: columna 25, desde fila 8 hasta fila 18
+        else if (columna == 25 && fila < 18) {
+            enemigos[i]->setPosicionEnemy(fila + 1, columna);
+        }
+
+        // Tramo 5: fila 18, desde columna 24 hasta columna 5
+        else if (fila == 18 && columna > 5) {
+            enemigos[i]->setPosicionEnemy(fila, columna - 1);
+        }
+
+        // Tramo 6: columna 5, desde fila 19 hasta fila 25
+        else if (columna == 5 && fila < 25) {
+            enemigos[i]->setPosicionEnemy(fila + 1, columna);
+        }
+
+        // Tramo 7: fila 25, desde columna 6 hasta columna 37
+        else if (fila == 25 && columna < 37) {
+            enemigos[i]->setPosicionEnemy(fila, columna + 1);
+        }
+
+        // Tramo 8: columna 37, desde fila 26 hasta fila 38
+        else if (columna == 37 && fila < 38) {
+            enemigos[i]->setPosicionEnemy(fila + 1, columna);
+        }
+
+        // Tramo 9: fila 38, de columna 38 hasta columna 39
+        else if (fila == 38 && columna < 39) {
+            enemigos[i]->setPosicionEnemy(fila, columna + 1);
+        }
+
+        // Último movimiento hacia la base
+        else if (fila == 38 && columna == 39) {
+            enemigos[i]->setPosicionEnemy(39, 39);
+        }
+    }
+
+    gameMap[19][19] = 0;
+
+    
+    cout << "Los enemigos avanzaron una posicion" << endl;
+}
 
 void Map::attackEnemies() {
     for (int i = 0; i < torres.size(); i++) {
