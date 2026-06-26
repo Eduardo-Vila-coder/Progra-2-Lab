@@ -214,19 +214,12 @@ void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero
 void Map::spawnEnemies() {
     int cantidadEnemigos = rand() % 5 + 1;
 
-    // Vector temporal donde se crean los enemigos
-    vector <Enemy*> enemigosTemporal;
-
-    for (int i = 0; i < cantidadEnemigos; i++) {
-       // Los enemigos aparecen de la siguiente forma y en posicion distinta cada uno
-        Enemy* nuevoEnemigo = new Enemy(1, start_position[i][0], start_position[i][1]);
-        enemigosTemporal.push_back(nuevoEnemigo);
-    }
-
     // Pasamos los enemigos al vector de la clase y lo hacemos de atras hacia adelante
-    for (int i = enemigosTemporal.size() - 1; i >= 0; i--) {
-        enemigos.push_back(enemigosTemporal[i]);
+    for (int i = cantidadEnemigos - 1; i >= 0; i--) {
+        Enemy* nuevoEnemigo = new Enemy(1, start_position[i][0], start_position[i][1]);
+        enemigos.push_back(nuevoEnemigo);
     }
+
     cout << cantidadEnemigos << " enemigos aparecieron en el punto de inicio" << endl;
 }
 
