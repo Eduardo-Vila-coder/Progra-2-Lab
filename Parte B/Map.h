@@ -33,6 +33,9 @@ public:
     void moveEnemies();
     void attackEnemies(int &dinero);
     void verifyResult(bool& victory, bool& defeat);
+
+    vector<Enemy*>& getEnemigos();
+    vector<Tower*>& getTorres();
 };
 
 #endif //PARTE_B_MAP_H

@@ -51,34 +51,31 @@ void Camera::mostrar(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bo
         for (int j = x; j < x + ancho; j++) {
             bool dibujado = false;
 
-            if (mapa[i][j] == 2) {
-                cout << setw(4) << "I";
-                dibujado = true;
-            }
-            if (mapa[i][j] == 3) {
-                cout << setw(4) << "B";
-                dibujado = true;
-            }
-
-            if (!dibujado) {
-                for (int k = 0; k < 6; k++) {
-                    if (i == posiTorres[k][0] && j == posiTorres[k][1] && torresActiv[k]) {
-                        dibujado = true;
-                        cout << setw(4) << ("T" + to_string(k + 1));
-                        break;
-                    }
-                    else if (i == posiEnemies[k][0] && j == posiEnemies[k][1] && enemigosActiv[k]) {
-                        dibujado = true;
-                        cout << setw(4) << "E";
-                        break;
-                    }
+            for (int k = 0; k < 6; k++) {
+                if (i == posiTorres[k][0] && j == posiTorres[k][1] && torresActiv[k]) {
+                    dibujado = true;
+                    cout << setw(4) << ("T" + to_string(k + 1));
+                    break;
+                }
+                else if (i == posiEnemies[k][0] && j == posiEnemies[k][1] && enemigosActiv[k]) {
+                    dibujado = true;
+                    cout << setw(4) << "E";
+                    break;
                 }
             }
 
-            if (mapa[i][j] == 1 && !dibujado) {
+            if (!dibujado && mapa[i][j] == 2) {
+                cout << setw(4) << "I";
+                dibujado = true;
+            }
+            if (!dibujado && mapa[i][j] == 3) {
+                cout << setw(4) << "B";
+                dibujado = true;
+            }
+            if (!dibujado && mapa[i][j] == 1) {
                 cout << setw(4) << "*";
             }
-            if (mapa[i][j] == 0 && !dibujado) {
+            if (!dibujado && mapa[i][j] == 0) {
                 cout << setw(4) << ".";
             }
         }
