@@ -36,7 +36,7 @@ int Camera::obtenY() const { return y; }
 int Camera::obtenAncho() const { return ancho; }
 int Camera::obtenAlto() const { return alto; }
 
-void Camera::mostrar(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bool torresActiv[6], bool enemigosActiv[6]) const {
+void Camera::drawWindow(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bool torresActiv[6], bool enemigosActiv[6]) const {
     if (mapa == nullptr) return;
 
     cout << setw(6) << " ";
@@ -85,8 +85,4 @@ void Camera::mostrar(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bo
 
 void Camera::operator()(int nuev_X, int nuev_Y) {
     fijarPosicion(nuev_X, nuev_Y);
-}
-
-bool Camera::operator==(const Camera& otraCamera) const {
-    return (this->x == otraCamera.x && this->y == otraCamera.y);
 }

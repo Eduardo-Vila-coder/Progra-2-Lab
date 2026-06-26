@@ -37,7 +37,7 @@ void Game::drawWindow() {
         }
     }
 
-    camara.mostrar(mapa.getGameMap(), posiTorres, posiEnemies, torresActiv, enemigosActiv);
+    camara.drawWindow(mapa.getGameMap(), posiTorres, posiEnemies, torresActiv, enemigosActiv);
 }
 
 void Game::gameStatus() {

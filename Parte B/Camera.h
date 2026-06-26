@@ -20,10 +20,9 @@ public:
     int obtenAncho() const;
     int obtenAlto() const;
 
-    void mostrar(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bool torresActiv[6], bool enemiesActiv[6]) const;
+    void drawWindow(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bool torresActiv[6], bool enemiesActiv[6]) const;
 
     void operator()(int nuevoX, int nuevoY);
-    bool operator==(const Camera& otraCamera) const;
 };
 
 #endif //PARTE_B_CAMERA_H
