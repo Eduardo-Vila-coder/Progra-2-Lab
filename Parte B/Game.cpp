@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Game::Game() : mapa(), camara(20, 20, 40, 40) {
+Game::Game() : camara(20, 20, 40, 40) {
     money = 300;
     waveSpawned = false;
     victory = false;
@@ -16,39 +16,19 @@ Game::~Game() {
 }
 
 void Game::drawWindow() {
-    int posiTorres[6][2] = {};
-    int posiEnemies[6][2] = {};
-    bool torresActiv[6] = {};
-    bool enemigosActiv[6] = {};
-
-    vector<Tower*>& torres = mapa.getTorres();
-    for (int i = 0; i < (int)torres.size() && i < 6; i++) {
-        posiTorres[i][0] = torres[i]->getRow();
-        posiTorres[i][1] = torres[i]->getCol();
-        torresActiv[i] = true;
-    }
-
-    vector<Enemy*>& enemigos = mapa.getEnemigos();
-    for (int i = 0; i < (int)enemigos.size() && i < 6; i++) {
-        if (enemigos[i]->getActivo()) {
-            posiEnemies[i][0] = enemigos[i]->getFila();
-            posiEnemies[i][1] = enemigos[i]->getColumna();
-            enemigosActiv[i] = true;
-        }
-    }
-
-    camara.drawWindow(mapa.getGameMap(), posiTorres, posiEnemies, torresActiv, enemigosActiv);
+    camara.drawWindow(mapa.getGameMap(), mapa.getTorres(), mapa.getEnemigos());
 }
 
 void Game::gameStatus() {
     vector<Enemy*>& enemigos = mapa.getEnemigos();
+
     int activeEnemies = 0;
-    for (int i = 0; i < (int)enemigos.size(); i++) {
+    for (int i = 0; i < enemigos.size(); i++) {
         if (enemigos[i]->getActivo()) activeEnemies++;
     }
 
     cout << "Dinero: " << money << endl;
-    cout << "Torres: " << (int)mapa.getTorres().size() << endl;
+    cout << "Torres: " << mapa.getTorres().size() << endl;
     cout << "Enemigos: " << activeEnemies << endl;
 }
 

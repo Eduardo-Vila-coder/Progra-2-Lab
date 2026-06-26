@@ -36,7 +36,7 @@ int Camera::obtenY() const { return y; }
 int Camera::obtenAncho() const { return ancho; }
 int Camera::obtenAlto() const { return alto; }
 
-void Camera::drawWindow(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bool torresActiv[6], bool enemigosActiv[6]) const {
+void Camera::drawWindow(int** mapa, vector<Tower*>& torres, vector<Enemy*> enemigos) const {
     if (mapa == nullptr) return;
 
     cout << setw(6) << " ";
@@ -52,12 +52,12 @@ void Camera::drawWindow(int** mapa, int posiTorres[6][2], int posiEnemies[6][2],
             bool dibujado = false;
 
             for (int k = 0; k < 6; k++) {
-                if (i == posiTorres[k][0] && j == posiTorres[k][1] && torresActiv[k]) {
+                if (i == torres.at(k)->getRow() && j == torres.at(k)->getCol() && torres.at(k)->getTowersActivate()) {
                     dibujado = true;
                     cout << setw(4) << ("T" + to_string(k + 1));
                     break;
                 }
-                else if (i == posiEnemies[k][0] && j == posiEnemies[k][1] && enemigosActiv[k]) {
+                else if (i == enemigos.at(k)->getFila() && j == enemigos.at(k)->getColumna() && enemigos.at(k)->getActivo()) {
                     dibujado = true;
                     cout << setw(4) << "E";
                     break;

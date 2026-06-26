@@ -1,6 +1,12 @@
 #ifndef PARTE_B_CAMERA_H
 #define PARTE_B_CAMERA_H
 
+// Estaria bien incluir estos archivos sin relacionarlos?
+#include <vector>
+#include "Tower.h"
+#include "Enemy.h"
+using namespace std;
+
 class Camera {
 private:
     int x,y;
@@ -20,7 +26,7 @@ public:
     int obtenAncho() const;
     int obtenAlto() const;
 
-    void drawWindow(int** mapa, int posiTorres[6][2], int posiEnemies[6][2], bool torresActiv[6], bool enemiesActiv[6]) const;
+    void drawWindow(int** mapa, vector<Tower*>& torres, vector<Enemy*> enemigos) const;
 
     void operator()(int nuevoX, int nuevoY);
 };
