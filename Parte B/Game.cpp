@@ -75,7 +75,7 @@ void Game::saveGame() {
              << torres[i]->getCol() << " "
              << torres[i]->getDamage() << " "
              << torres[i]->getShots() << " "
-             << torres[i]->getTowersActivate() << endl;
+             << torres[i]->getTowerActivate() << endl;
     }
 
     vector<Enemy*>& enemigos = mapa.getEnemigos();

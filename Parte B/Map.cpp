@@ -297,7 +297,7 @@ void Map::attackEnemies(int& dinero) {
     bool hubo_ataque = false;
 
     for (int i = 0; i < torres.size(); i++) {
-        if (torres[i]->getTowersActivate() == false) {
+        if (torres[i]->getTowerActivate() == false) {
             continue;
         }
 

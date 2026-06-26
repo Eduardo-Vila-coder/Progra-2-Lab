@@ -28,7 +28,7 @@ int Tower::getCol() {
 int Tower::getDamage() {
     return this->damage;
 };
-bool Tower::getTowersActivate() {
+bool Tower::getTowerActivate() {
     return this->towerActivate;
 };
 int Tower::getShots() {

@@ -52,7 +52,7 @@ void Camera::drawWindow(int** mapa, vector<Tower*>& torres, vector<Enemy*> enemi
             bool dibujado = false;
 
             for (int k = 0; k < 6; k++) {
-                if (i == torres.at(k)->getRow() && j == torres.at(k)->getCol() && torres.at(k)->getTowersActivate()) {
+                if (i == torres.at(k)->getRow() && j == torres.at(k)->getCol() && torres.at(k)->getTowerActivate()) {
                     dibujado = true;
                     cout << setw(4) << ("T" + to_string(k + 1));
                     break;

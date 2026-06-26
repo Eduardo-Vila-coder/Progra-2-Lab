@@ -26,7 +26,7 @@ private:
     int getRow();
     int getCol();
     int getDamage();
-    bool getTowersActivate();
+    bool getTowerActivate();
     int getShots();
 	int getFilaRango(int posicion);
 	int getColumnaRango(int posicion);
