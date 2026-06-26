@@ -215,15 +215,22 @@ void Map::spawnEnemies() {
     srand(time(nullptr));
     int cantidadEnemigos = rand() % 5 + 1;
 
+    // Vector temporal donde se crean los enemigos
+    vector <Enemy*> enemigosTemporal;
+
     for (int i = 0; i < cantidadEnemigos; i++) {
-        int vidaEnemigo = 1;
+        int vidaEnemigo = rand() % 5 + 1;
 
-        Enemy* nuevoEnemigo = new Enemy(vidaEnemigo, 0, 1);
-
-        enemigos.push_back(nuevoEnemigo);
+       // Los enemigos aparecen de la siguiente forma y en posicion distinta cada uno
+        Enemy* nuevoEnemigo = new Enemy(vidaEnemigo, 0, i + 1);
+        enemigosTemporal.push_back(nuevoEnemigo);
     }
 
-    cout << cantidadEnemigos << " enemigos aparecieron en el punto de inicio" << endl;
+    // Pasamos los enemigos al vector de la clase y lo hacemos de atras hacia adelante
+    for (int i = enemigosTemporal.size() - 1; i >= 0; i--) {
+        enemigos.push_back(enemigosTemporal[i]);
+    }
+    cout << cantidadEnemigos << "Los enemigos aparecieron en el punto de inicio" << endl;
 }
 
 void Map::moveEnemies() {
@@ -241,37 +248,37 @@ void Map::moveEnemies() {
         }
 
         // Tramo 2: columna 4, desde fila 0 hasta fila 7
-        else if (columna == 4 && fila < 7) {
+        else if (columna == 4 && fila >=1 && fila < 7) {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
         // Tramo 3: fila 7, desde columna 5 hasta columna 25
-        else if (fila == 7 && columna < 25) {
+        else if (fila == 7 && columna >= 5 && columna < 25) {
             enemigos[i]->setPosicionEnemy(fila, columna + 1);
         }
 
         // Tramo 4: columna 25, desde fila 8 hasta fila 18
-        else if (columna == 25 && fila < 18) {
+        else if (columna == 25 && fila >= 8 && fila < 18) {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
         // Tramo 5: fila 18, desde columna 24 hasta columna 5
-        else if (fila == 18 && columna > 5) {
+        else if (fila == 18 && columna <= 24 && columna > 5) {
             enemigos[i]->setPosicionEnemy(fila, columna - 1);
         }
 
         // Tramo 6: columna 5, desde fila 19 hasta fila 25
-        else if (columna == 5 && fila < 25) {
+        else if (columna == 5 && fila >= 19 && fila < 25) {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
         // Tramo 7: fila 25, desde columna 6 hasta columna 37
-        else if (fila == 25 && columna < 37) {
+        else if (fila == 25 && columna >= 6 && columna < 37) {
             enemigos[i]->setPosicionEnemy(fila, columna + 1);
         }
 
         // Tramo 8: columna 37, desde fila 26 hasta fila 38
-        else if (columna == 37 && fila < 38) {
+        else if (columna == 37 && fila >= 26 && fila < 38) {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
@@ -291,44 +298,6 @@ void Map::moveEnemies() {
         }
     }
 
-
-    // for (int i = 0; i < enemigos.size() - 1; i++) {
-    //     for (int j = 0; j < enemigos.size() - 1 - i; j++) {
-    //         int filaActual = enemigos[j]->getFila();
-    //         int columnaActual = enemigos[j]->getColumna();
-    //
-    //         int filaSiguiente = enemigos[j + 1]->getFila();
-    //         int columnaSiguiente = enemigos[j + 1]->getColumna();
-    //
-    //         bool cambiar = false;
-    //
-    //         // Si esta en una fila mas abajo, ya avanzo mas
-    //         if (filaSiguiente > filaActual) {
-    //             cambiar = true;
-    //         }
-    //
-    //         // Si estan en la misma fila, revisamos hacia donde va ese tramo
-    //         else if (filaSiguiente == filaActual) {
-    //             // En estos tramos se avanza hacia la derecha
-    //             if ((filaActual == 0 || filaActual == 7 || filaActual == 25 || filaActual == 38) && columnaSiguiente > columnaActual) {
-    //                 cambiar = true;
-    //             }
-    //
-    //             // En la fila 18 se avanza hacia la izquierda
-    //             if (filaActual == 18 && columnaSiguiente < columnaActual) {
-    //                 cambiar = true;
-    //             }
-    //         }
-    //
-    //         if (cambiar == true) {
-    //             Enemy* auxiliar = enemigos[j];
-    //             enemigos[j] = enemigos[j + 1];
-    //             enemigos[j + 1] = auxiliar;
-    //         }
-    //     }
-    // }
-
-    
     cout << "Los enemigos avanzaron una posicion" << endl;
 }
 
