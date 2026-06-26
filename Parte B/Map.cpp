@@ -212,7 +212,6 @@ void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero
 }
 
 void Map::spawnEnemies() {
-    srand(time(nullptr));
     int cantidadEnemigos = rand() % 5 + 1;
 
     // Vector temporal donde se crean los enemigos
@@ -230,7 +229,7 @@ void Map::spawnEnemies() {
     for (int i = enemigosTemporal.size() - 1; i >= 0; i--) {
         enemigos.push_back(enemigosTemporal[i]);
     }
-    cout << cantidadEnemigos << "Los enemigos aparecieron en el punto de inicio" << endl;
+    cout << cantidadEnemigos << " enemigos aparecieron en el punto de inicio" << endl;
 }
 
 void Map::moveEnemies() {
@@ -294,10 +293,11 @@ void Map::moveEnemies() {
         // Último movimiento hacia la base
         else if (fila == 38 && columna == 39) {
             enemigos[i]->setPosicionEnemy(39, 39);
-            gameMap[19][19] = 0;
         }
     }
-
+    
+    gameMap[19][19] = 0;
+    
     cout << "Los enemigos avanzaron una posicion" << endl;
 }
 
