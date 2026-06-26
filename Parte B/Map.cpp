@@ -218,10 +218,8 @@ void Map::spawnEnemies() {
     vector <Enemy*> enemigosTemporal;
 
     for (int i = 0; i < cantidadEnemigos; i++) {
-        int vidaEnemigo = rand() % 5 + 1;
-
        // Los enemigos aparecen de la siguiente forma y en posicion distinta cada uno
-        Enemy* nuevoEnemigo = new Enemy(vidaEnemigo, 0, i + 1);
+        Enemy* nuevoEnemigo = new Enemy(1, start_position[i][0], start_position[i][1]);
         enemigosTemporal.push_back(nuevoEnemigo);
     }
 
@@ -241,43 +239,43 @@ void Map::moveEnemies() {
         int fila = enemigos[i]->getFila();
         int columna = enemigos[i]->getColumna();
 
-        // Tramo 1: fila 0, desde columna 1 hasta columna 4
-        if (fila == 0 && columna >= 1 && columna < 4) {
+        // Tramo 1: fila 0, desde columna 1 hasta columna 3
+        if (fila == 0 && columna >= 1 && columna <= 3) {
             enemigos[i]->setPosicionEnemy(fila, columna + 1);
         }
 
-        // Tramo 2: columna 4, desde fila 0 hasta fila 7
-        else if (columna == 4 && fila >=1 && fila < 7) {
+        // Tramo 2: columna 4, desde fila 0 hasta fila 6
+        else if (columna == 4 && fila >= 0 && fila <= 6) {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
-        // Tramo 3: fila 7, desde columna 5 hasta columna 25
-        else if (fila == 7 && columna >= 5 && columna < 25) {
+        // Tramo 3: fila 7, desde columna 4 hasta columna 24
+        else if (fila == 7 && columna >= 4 && columna <= 24) {
             enemigos[i]->setPosicionEnemy(fila, columna + 1);
         }
 
-        // Tramo 4: columna 25, desde fila 8 hasta fila 18
-        else if (columna == 25 && fila >= 8 && fila < 18) {
+        // Tramo 4: columna 25, desde fila 7 hasta fila 17
+        else if (columna == 25 && fila >= 7 && fila <= 17) {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
-        // Tramo 5: fila 18, desde columna 24 hasta columna 5
-        else if (fila == 18 && columna <= 24 && columna > 5) {
+        // Tramo 5: fila 18, desde columna 25 hasta columna 6
+        else if (fila == 18 && columna <= 25 && columna >= 6) {
             enemigos[i]->setPosicionEnemy(fila, columna - 1);
         }
 
-        // Tramo 6: columna 5, desde fila 19 hasta fila 25
-        else if (columna == 5 && fila >= 19 && fila < 25) {
+        // Tramo 6: columna 5, desde fila 18 hasta fila 24
+        else if (columna == 5 && fila >= 18 && fila <= 24) {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
-        // Tramo 7: fila 25, desde columna 6 hasta columna 37
-        else if (fila == 25 && columna >= 6 && columna < 37) {
+        // Tramo 7: fila 25, desde columna 5 hasta columna 36
+        else if (fila == 25 && columna >= 5 && columna <= 36) {
             enemigos[i]->setPosicionEnemy(fila, columna + 1);
         }
 
-        // Tramo 8: columna 37, desde fila 26 hasta fila 38
-        else if (columna == 37 && fila >= 26 && fila < 38) {
+        // Tramo 8: columna 37, desde fila 25 hasta fila 37
+        else if (columna == 37 && fila >= 25 && fila <= 37) {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
@@ -293,10 +291,9 @@ void Map::moveEnemies() {
         // Último movimiento hacia la base
         else if (fila == 38 && columna == 39) {
             enemigos[i]->setPosicionEnemy(39, 39);
+            gameMap[19][19] = 0;
         }
     }
-    
-    gameMap[19][19] = 0;
     
     cout << "Los enemigos avanzaron una posicion" << endl;
 }
