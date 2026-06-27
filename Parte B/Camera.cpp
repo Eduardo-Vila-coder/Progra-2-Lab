@@ -17,12 +17,25 @@ Camera::Camera(int ancho_Visor, int alto_Visor, int anchoMap, int altoMap) {
 Camera::~Camera() {
 }
 
+void Camera::operator()(int nuevoX, int nuevoY) {
+    x = nuevoX;
+    y = nuevoY;
+
+    if (x < 0) x = 0;
+
+    if (y < 0) y = 0;
+
+    if (x > limiteAncho - ancho) x = limiteAncho - ancho;
+
+    if (y > limiteAlto - alto) y = limiteAlto - alto;
+}
+
 
 void Camera::mover(int movX, int movY) {
     int nuevoX = x + movX;
     int nuevoY = y + movY;
 
-    operator()(nuevoX, nuevoY);
+    (*this)(nuevoX, nuevoY);
 }
 
 int Camera::obtenX() const { return x; }
@@ -75,17 +88,4 @@ void Camera::drawWindow(int** mapa, vector<Tower*>& torres, vector<Enemy*> enemi
         }
         cout << endl;
     }
-}
-
-void Camera::operator()(int nuevoX, int nuevoY) {
-    x = nuevoX;
-    y = nuevoY;
-
-    if (x < 0) x = 0;
-    
-    if (y < 0) y = 0;
-    
-    if (x > limiteAncho - ancho) x = limiteAncho - ancho;
-    
-    if (y > limiteAlto - alto) y = limiteAlto - alto;
 }
