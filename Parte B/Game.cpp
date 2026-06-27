@@ -58,7 +58,7 @@ void Game::verifyResult() {
 }
 
 void Game::saveGame() {
-    ofstream file("savegame.txt");
+    ofstream file("../savegame.txt");
     if (!file.is_open()) {
         cout << "Error al guardar" << endl;
         return;
@@ -92,7 +92,7 @@ void Game::saveGame() {
 }
 
 void Game::loadGame() {
-    ifstream file("savegame.txt");
+    ifstream file("../savegame.txt");
     if (!file.is_open()) {
         cout << "operacion no valida" << endl;
         return;
