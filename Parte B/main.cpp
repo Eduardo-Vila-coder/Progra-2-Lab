@@ -31,11 +31,11 @@ int main() {
             game->drawWindow();
         } else if (command == "up") {
             cin >> n;
-            game->moveCamera(0, n);
+            game->moveCamera(0, -n);        // Es -n en up porque el eje Y esta invertido
             game->drawWindow();
         } else if (command == "down") {
             cin >> n;
-            game->moveCamera(0, -n);
+            game->moveCamera(0, n);         // Es +n en down porque el eje Y esta invertido
             game->drawWindow();
         } else if (command == "left") {
             cin >> n;
@@ -54,6 +54,7 @@ int main() {
         } else if (command == "wave") {
             game->spawnEnemies();
             game->gameStatus();
+            game->drawWindow();
         } else if (command == "next") {
             game->moveEnemies();
             game->attackEnemies();

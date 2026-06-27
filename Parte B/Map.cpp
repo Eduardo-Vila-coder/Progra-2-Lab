@@ -35,7 +35,7 @@ Map::~Map() {
         for (int i = 0; i < length_side; i++) {
             delete[] gameMap[i];
         }
-        
+
 
         delete[] gameMap;
         gameMap = nullptr;
@@ -52,7 +52,7 @@ void Map::crearMapa() {
             gameMap[i][j] = 0;
         }
     }
-    
+
 }
 
 void Map::crearCamino() {
@@ -217,8 +217,6 @@ void Map::spawnEnemies() {
         Enemy* nuevoEnemigo = new Enemy(1, start_position[i][0], start_position[i][1]);
         enemigos.push_back(nuevoEnemigo);
     }
-
-    cout << cantidadEnemigos << " enemigos aparecieron en el punto de inicio" << endl;
 }
 
 void Map::moveEnemies() {
@@ -274,7 +272,7 @@ void Map::moveEnemies() {
             enemigos[i]->setPosicionEnemy(fila + 1, columna);
         }
 
-        // Tramo 9: 
+        // Tramo 9:
         else if (fila == 38 && columna == 37) {
             enemigos[i]->setPosicionEnemy(38,38);
         }
@@ -342,7 +340,7 @@ void Map::attackEnemies(int& dinero) {
     }
 }
 
- 
+
 void Map::verifyResult(bool& victory, bool& defeat) {
     victory = false;
     defeat = false;
