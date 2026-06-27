@@ -1,4 +1,6 @@
-#include "Camera.h"
+#include "Cámara.h"
+#include "Torre.h"
+#include "Enemigo.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -17,25 +19,23 @@ Camera::Camera(int ancho_Visor, int alto_Visor, int anchoMap, int altoMap) {
 Camera::~Camera() {
 }
 
-// Fijamos las coordenadas de la esquina inferior izquierda de la camara en un nuevoX y un nuevoY
+// El operador () sirve para fijar las coordenadas, validando que no sobrepasen los límites del mapa.
+// Su definición elimina la necesidad una funcion separada fijarPosicion.
 void Camera::operator()(int nuevoX, int nuevoY) {
     x = nuevoX;
     y = nuevoY;
 
     if (x < 0) x = 0;
-
     if (y < 0) y = 0;
-
     if (x > limiteAncho - ancho) x = limiteAncho - ancho;
-
     if (y > limiteAlto - alto) y = limiteAlto - alto;
 }
-
 
 void Camera::mover(int movX, int movY) {
     int nuevoX = x + movX;
     int nuevoY = y + movY;
 
+    // Se usa el operador () en lugar de la funcion fijarPosicion
     (*this)(nuevoX, nuevoY);
 }
 
@@ -44,7 +44,7 @@ int Camera::obtenY() const { return y; }
 int Camera::obtenAncho() const { return ancho; }
 int Camera::obtenAlto() const { return alto; }
 
-void Camera::drawWindow(int** mapa, vector<Tower*>& torres, vector<Enemy*> enemigos) const {
+void Camera::mostrar(int** mapa, vector<Tower*>& torres, vector<Enemy*>& enemigos) const {
     if (mapa == nullptr) return;
 
     cout << setw(6) << " ";
@@ -59,34 +59,43 @@ void Camera::drawWindow(int** mapa, vector<Tower*>& torres, vector<Enemy*> enemi
         for (int j = x; j < x + ancho; j++) {
             bool dibujado = false;
 
-            for (int k = 0; k < 6; k++) {
-                if (k < torres.size() && i == torres.at(k)->getRow() && j == torres.at(k)->getCol()) {
+            // Saca de manera automatica posiTorres y torresActiv
+            for (size_t k = 0; k < torres.size(); k++) {
+                if (i == torres.at(k)->getRow() && j == torres.at(k)->getCol() && torres.at(k)->getTowerActivate()) {
                     dibujado = true;
                     cout << setw(4) << ("T" + to_string(k + 1));
                     break;
                 }
-                else if (k < enemigos.size() && i == enemigos.at(k)->getFila() && j == enemigos.at(k)->getColumna() && enemigos.at(k)->getActivo()) {
-                    dibujado = true;
-                    cout << setw(4) << "E";
-                    break;
+            }
+
+            // Saca por sí mismo posiEnemies y enemigosActiv
+            if (!dibujado) {
+                for (size_t k = 0; k < enemigos.size(); k++) {
+                    if (i == enemigos.at(k)->getFila() && j == enemigos.at(k)->getColumna() && enemigos.at(k)->getActivo()) {
+                        dibujado = true;
+                        cout << setw(4) << "E";
+                        break;
+                    }
                 }
             }
 
-            if (!dibujado && mapa[i][j] == 2) {
-                cout << setw(4) << "I";
-                dibujado = true;
-            }
-            if (!dibujado && mapa[i][j] == 3) {
-                cout << setw(4) << "B";
-                dibujado = true;
-            }
-            if (!dibujado && mapa[i][j] == 1) {
-                cout << setw(4) << "*";
-            }
-            if (!dibujado && mapa[i][j] == 0) {
-                cout << setw(4) << ".";
+            // Texturas estáticas del mapa para renderizar
+            if (!dibujado) {
+                if (mapa[i][j] == 2) {
+                    cout << setw(4) << "I";
+                }
+                else if (mapa[i][j] == 3) {
+                    cout << setw(4) << "B";
+                }
+                else if (mapa[i][j] == 1) {
+                    cout << setw(4) << "*";
+                }
+                else if (mapa[i][j] == 0) {
+                    cout << setw(4) << ".";
+                }
             }
         }
         cout << endl;
     }
 }
+
