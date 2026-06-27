@@ -10,7 +10,6 @@ Map::Map() {
     gameMap = nullptr;
     crearMapa();
     crearCamino();
-    
 }
 
 Map::Map(int length_side) {
@@ -18,7 +17,6 @@ Map::Map(int length_side) {
     gameMap = nullptr;
     crearMapa();
     crearCamino();
-    
 }
 
 Map::~Map() {
@@ -104,8 +102,8 @@ void Map::crearCamino() {
         gameMap[i][36] = 1;
     }
 
-    // Decimo tramo: fila 40, desde la columna 37 hasta la columna 40
-    for (int j = 36; j <= 39; j++) {
+    // Decimo tramo: fila 40, desde la columna 37 hasta la columna 39
+    for (int j = 36; j <= 38; j++) {
         gameMap[39][j] = 1;
     }
 
@@ -207,8 +205,8 @@ void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero
 
     dinero = dinero - costoTorre;
 
-    cout << "Torre colocada en fila " << fila + 1 << ", columna " << columna + 1 << endl;
-    cout << "Dinero actual: " << dinero << endl;
+    cout << "Torre colocada\n";
+    cout << "Dinero: " << dinero << endl;
 }
 
 void Map::spawnEnemies() {
@@ -224,10 +222,14 @@ void Map::spawnEnemies() {
 }
 
 void Map::moveEnemies() {
+    bool huboAvance = false;
+
     for (int i = 0; i < enemigos.size(); i++) {
         if (enemigos[i]->getActivo() == false) {
             continue;
         }
+
+        huboAvance = true;
 
         int fila = enemigos[i]->getFila();
         int columna = enemigos[i]->getColumna();
@@ -287,8 +289,10 @@ void Map::moveEnemies() {
             gameMap[19][19] = 0;
         }
     }
-    
-    cout << "Los enemigos avanzaron una posicion" << endl;
+
+    if (huboAvance) {
+        cout << "Enemigos avanzaron" << endl;
+    }
 }
 
 void Map::attackEnemies(int& dinero) {
@@ -334,7 +338,7 @@ void Map::attackEnemies(int& dinero) {
     }
 
     if (hubo_ataque) {
-        cout << "Las torres atacaron a los enemigos" << endl;
+        cout << "Torres atacaron\nEstado actualizado\n";
     }
 }
 

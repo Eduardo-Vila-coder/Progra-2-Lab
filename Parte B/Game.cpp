@@ -70,7 +70,7 @@ void Game::saveGame() {
 
     vector<Tower*>& torres = mapa.getTorres();
     file << torres.size() << endl;
-    for (int i = 0; i < (int)torres.size(); i++) {
+    for (int i = 0; i < torres.size(); i++) {
         file << torres[i]->getRow() << " "
              << torres[i]->getCol() << " "
              << torres[i]->getDamage() << " "
@@ -80,7 +80,7 @@ void Game::saveGame() {
 
     vector<Enemy*>& enemigos = mapa.getEnemigos();
     file << enemigos.size() << endl;
-    for (int i = 0; i < (int)enemigos.size(); i++) {
+    for (int i = 0; i < enemigos.size(); i++) {
         file << enemigos[i]->getSalud() << " "
              << enemigos[i]->getFila() << " "
              << enemigos[i]->getColumna() << " "
@@ -98,14 +98,16 @@ void Game::loadGame() {
         return;
     }
 
+    // Limpiando completamente el vector enemigos de la partida actual
     vector<Enemy*>& enemigos = mapa.getEnemigos();
-    for (int i = 0; i < (int)enemigos.size(); i++) {
+    for (int i = 0; i < enemigos.size(); i++) {
         delete enemigos[i];
     }
     enemigos.clear();
 
+    // Limpiando completamente el vector torres de la partida actual
     vector<Tower*>& torres = mapa.getTorres();
-    for (int i = 0; i < (int)torres.size(); i++) {
+    for (int i = 0; i < torres.size(); i++) {
         delete torres[i];
     }
     torres.clear();

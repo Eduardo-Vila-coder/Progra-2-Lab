@@ -31,11 +31,11 @@ int main() {
             game->drawWindow();
         } else if (command == "up") {
             cin >> n;
-            game->moveCamera(0, -n);
+            game->moveCamera(0, n);
             game->drawWindow();
         } else if (command == "down") {
             cin >> n;
-            game->moveCamera(0, n);
+            game->moveCamera(0, -n);
             game->drawWindow();
         } else if (command == "left") {
             cin >> n;
@@ -58,10 +58,6 @@ int main() {
             game->moveEnemies();
             game->attackEnemies();
             game->verifyResult();
-            cout << "Enemigos avanzaron" << endl;
-            cout << "Torres atacaron" << endl;
-            cout << "Estado actualizado" << endl;
-            game->drawWindow();
         } else if (command == "save") {
             game->saveGame();
         } else if (command == "load") {
@@ -83,7 +79,6 @@ int main() {
             cout << "next : Avanza un turno: enemigos se mueven y torres atacan" << endl;
             cout << "status : Muestra dinero, cantidad de torres y enemigos vivos" << endl;
             cout << "save : Guarda la partida en savegame.txt" << endl;
-
             cout << "load : Carga la partida desde savegame.txt" << endl;
             cout << "exit : Cierra el juego" << endl;
 
