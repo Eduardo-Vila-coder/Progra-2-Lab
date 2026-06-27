@@ -210,7 +210,7 @@ void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero
 }
 
 void Map::spawnEnemies() {
-    int cantidadEnemigos = rand() % 5 + 1;
+    int cantidadEnemigos = rand() % 4 + 3;
 
     // Pasamos los enemigos al vector de la clase y lo hacemos de atras hacia adelante
     for (int i = cantidadEnemigos - 1; i >= 0; i--) {
