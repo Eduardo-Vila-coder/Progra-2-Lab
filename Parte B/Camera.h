@@ -19,8 +19,6 @@ public:
     ~Camera();
 
     void mover(int movX, int movY);
-    void fijarPosicion(int nuevoX, int nuevoY);
-
     int obtenX() const;
     int obtenY() const;
     int obtenAncho() const;
