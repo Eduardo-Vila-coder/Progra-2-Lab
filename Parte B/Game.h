@@ -3,6 +3,9 @@
 
 #include "Map.h"
 #include "Camera.h"
+#include <iostream>
+#include <fstream>
+#include <vector>
 
 class Game {
 private:

@@ -15,7 +15,7 @@ private:
 	int shots; //cantidad de disparos que tiene la torre, se disminuirá conforme los ejecute
 	int attackRange[12][2]= {
 		{-2, 1},{-2, 0},{-2,-1},{-1,-2},{ 0,-2},{ 1,-2},{ 2,-1},{ 2, 0},{ 2, 1},{ 1, 2},{ 0, 2},{-1, 2}
-	};
+	};	// Rango de ataque ordenado desde la posicion relativa mas cercana a la base hasta la posicion relativa mas lejana a esta
 
 public:
 	Tower(); //constructor por defecto

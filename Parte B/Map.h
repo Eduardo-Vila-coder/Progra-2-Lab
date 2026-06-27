@@ -15,7 +15,7 @@ private:
     //Creamos un arreglo local con las posiciones iniciales de todos los enemigos considerando el numero maximo de ellos que puede aparecer
     int start_position[6][2]={{0, 1}, {0, 2}, {0, 3},{0, 4}, {1, 4}, {2, 4}};
 
-    // Agregacion: Lo que va a hacer Map es guardar punteros a enemigos y torres
+    // Composicion: Lo que va a hacer Map es guardar punteros a enemigos y torres
     vector <Enemy*> enemigos;
     vector <Tower*> torres;
     

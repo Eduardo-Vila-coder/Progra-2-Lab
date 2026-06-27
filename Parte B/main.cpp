@@ -10,15 +10,18 @@ int main() {
     do {
         cout << "$: ";
         cin >> command;
-    } while (command != "init" && command != "load");
+    } while (command != "init");
 
     Game* game = new Game();
 
-    if (command == "init") {
+    ifstream file("../savegame.txt");
+    if (file.is_open()) {
+        file.close();
+        game->loadGame();
+    } else {
         cout << "Welcome to the world of tower defense xyz" << endl;
         game->gameStatus();
-    } else {
-        game->loadGame();
+        game->drawWindow();
     }
 
     int n, x, y;
@@ -61,6 +64,8 @@ int main() {
             game->verifyResult();
         } else if (command == "save") {
             game->saveGame();
+            cout << "El juego ha finalizado" << endl;
+            break;
         } else if (command == "load") {
             game->loadGame();
         } else if (command == "exit") {
@@ -88,6 +93,8 @@ int main() {
             cout << "Comando no reconocido" << endl;
         }
     } while (!game->isVictory() && !game->isDefeat());
+
+    game->drawWindow();
 
     if (game->isVictory()) {
         cout << "GANASTE - Todos los enemigos fueron eliminados" << endl;

@@ -1,11 +1,8 @@
 #include "Game.h"
-#include <iostream>
-#include <fstream>
-#include <vector>
 
 using namespace std;
 
-Game::Game() : camara(20, 20, 40, 40) {
+Game::Game() : mapa(), camara(20, 20, 40, 40) {
     money = 300;
     waveSpawned = false;
     victory = false;

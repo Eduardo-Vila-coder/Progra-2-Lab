@@ -212,7 +212,10 @@ void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero
 void Map::spawnEnemies() {
     int cantidadEnemigos = rand() % 4 + 3;
 
-    // Pasamos los enemigos al vector de la clase y lo hacemos de atras hacia adelante
+    /* Creamos los enemigos usando la matriz de cercania a I en orden inverso, de modo que el primer enemigo del vector
+     * sea el mas cercano a B (o sea el mas lejano a I), y el ultimo enemigo del vector se el mas lejano a B (o sea el
+     * mas cercano a I)
+     */
     for (int i = cantidadEnemigos - 1; i >= 0; i--) {
         Enemy* nuevoEnemigo = new Enemy(1, start_position[i][0], start_position[i][1]);
         enemigos.push_back(nuevoEnemigo);
