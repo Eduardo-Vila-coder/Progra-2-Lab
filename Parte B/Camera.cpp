@@ -17,6 +17,7 @@ Camera::Camera(int ancho_Visor, int alto_Visor, int anchoMap, int altoMap) {
 Camera::~Camera() {
 }
 
+// Fijamos las coordenadas de la esquina inferior izquierda de la camara en un nuevoX y un nuevoY
 void Camera::operator()(int nuevoX, int nuevoY) {
     x = nuevoX;
     y = nuevoY;

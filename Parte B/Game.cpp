@@ -120,7 +120,7 @@ void Game::loadGame() {
 
     int camX, camY;
     file >> camX >> camY;
-    camara.fijarPosicion(camX, camY);
+    camara(camX, camY);
 
     int numTorres;
     file >> numTorres;
