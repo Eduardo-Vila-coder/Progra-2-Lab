@@ -210,6 +210,7 @@ void Map::placeTower(int fila, int columna, int danio, int disparos, int& dinero
 }
 
 void Map::spawnEnemies() {
+    srand(time(nullptr));       // Mejora la aleatoriedad del proceso
     int cantidadEnemigos = rand() % 4 + 3;
 
     /* Creamos los enemigos usando la matriz de cercania a I en orden inverso, de modo que el primer enemigo del vector
