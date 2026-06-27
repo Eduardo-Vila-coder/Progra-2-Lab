@@ -371,3 +371,11 @@ void Map::verifyResult(bool& victory, bool& defeat) {
         victory = true;
     }
 }
+
+vector<Enemy*>& Map::getEnemigos() {
+    return enemigos;
+}
+
+vector<Tower*>& Map::getTorres() {
+    return torres;
+}
