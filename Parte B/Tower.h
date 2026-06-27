@@ -8,37 +8,37 @@
 
 class Tower {
 private:
-    int row; //coordenadas de la torre
-    int col;
-    int damage; //daño que causa
-    bool towerActivate; //para verificar si la torre está activa
-    int shots; //cantidad de disparos que tiene la torre, se disminuirá conforme los ejecute
-    int attackRange[12][2]= {
-    	{-2, 1},{-2, 0},{-2,-1},{-1,-2},{ 0,-2},{ 1,-2},{ 2,-1},{ 2, 0},{ 2, 1},{ 1, 2},{ 0, 2},{-1, 2}
-    };
+	int row; //coordenadas de la torre
+	int col;
+	int damage; //daño que causa
+	bool towerActivate; //para verificar si la torre está activa
+	int shots; //cantidad de disparos que tiene la torre, se disminuirá conforme los ejecute
+	int attackRange[12][2]= {
+		{-2, 1},{-2, 0},{-2,-1},{-1,-2},{ 0,-2},{ 1,-2},{ 2,-1},{ 2, 0},{ 2, 1},{ 1, 2},{ 0, 2},{-1, 2}
+	};
 
-    public:
-    Tower(); //constructor por defecto
-    Tower(int row, int col, int damage, int shots); //constructor de asignación
-    ~Tower();
+public:
+	Tower(); //constructor por defecto
+	Tower(int row, int col, int damage, int shots); //constructor de asignación
+	~Tower();
 
-    //getters and setters
-    int getRow();
-    int getCol();
-    int getDamage();
-    bool getTowerActivate();
-    int getShots();
+	//getters and setters
+	int getRow();
+	int getCol();
+	int getDamage();
+	bool getTowerActivate();
+	int getShots();
 	int getFilaRango(int posicion);
 	int getColumnaRango(int posicion);
 
-    void setTowersActivate(bool towersActivate);
-    void setShots(int shots);
-    void setRow(int row);
-    void setCol(int col);
-    void setDamage(int damage);
+	void setTowersActivate(bool towersActivate);
+	void setShots(int shots);
+	void setRow(int row);
+	void setCol(int col);
+	void setDamage(int damage);
 
-    //funciones:
-    //#1 restar la cantidad de disparos y desactivar la torre cuando ya no tenga disparos disponibles
+	//funciones:
+	//#1 restar la cantidad de disparos y desactivar la torre cuando ya no tenga disparos disponibles
 	void newShots();
 
 	void operator-(int disparo);

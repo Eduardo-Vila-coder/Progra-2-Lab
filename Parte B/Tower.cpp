@@ -53,10 +53,10 @@ void Tower::setDamage(int damage) {
 //funciones:
 //#1 restar la cantidad de disparos y desactivar la torre cuando ya no tenga disparos disponibles
 void Tower:: newShots() {
-   if (shots>0)
-       *this - 1;
-   if (shots==0)
-       towerActivate=false;
+    if (shots>0)
+        *this - 1;
+    if (shots==0)
+        towerActivate=false;
 };
 
 //usamos una sobrecarga del operador -

@@ -1,4 +1,4 @@
-#include "Cámara.h"
+#include "Camera.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -90,4 +90,3 @@ void Camera::drawWindow(int** mapa, vector<Tower*>& torres, vector<Enemy*> enemi
         cout << endl;
     }
 }
-
